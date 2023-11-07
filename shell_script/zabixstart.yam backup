@@ -1,0 +1,124 @@
+---
+  - name: start the zabbix service in presto remote_machine
+    hosts: releasepresto
+    gather_facts: false
+    become: true
+    become_user: root
+    become_method: sudo
+    tasks:
+       - name: Copy shell script to Remote machine
+         copy:
+          src: /data/scripts/zabbixstart.sh
+          dest: /tmp/zabbixstart.sh
+          #dest: /tmp/{{ inventory_hostname }}/zabbixstart.sh
+          #when: "{{ groups['zabbixstart']}}"
+       - name: Execute the shell scirpt
+         command: 'sh /tmp/zabbixstart.sh'
+         #when: "{{ groups['zabbixstart'] }}"
+
+  - name: start the zabbix service in apache remote_machine
+    hosts: qaapachedrill
+    gather_facts: false
+    become: true
+    become_user: root
+    become_method: sudo
+    tasks:
+       - name: Copy shell script to Remote machine
+         copy:
+          src: /data/scripts/zabbixstart.sh
+          dest: /tmp/zabbixstart.sh
+          #dest: /tmp/{{ inventory_hostname }}/zabbixstart.sh
+          #when: "{{ groups['zabbixstart']}}"
+       - name: Execute the shell scirpt
+         command: 'sh /tmp/zabbixstart.sh'
+         #when: "{{ groups['zabbixstart'] }}"
+  - name: start the zabbix service in mongo remote_machine
+    hosts: qamongo
+    gather_facts: false
+    become: true
+    become_user: root
+    become_method: sudo
+    tasks:
+       - name: Copy shell script to Remote machine
+         copy:
+          src: /data/scripts/zabbixstart.sh
+          dest: /tmp/zabbixstart.sh
+          #dest: /tmp/{{ inventory_hostname }}/zabbixstart.sh
+          #when: "{{ groups['zabbixstart']}}"
+       - name: Execute the shell scirpt
+         command: 'sh /tmp/zabbixstart.sh'
+         #when: "{{ groups['zabbixstart'] }}"
+
+  - name: start the zabbix service in highchart remote_machine
+    hosts: qahighchart
+    gather_facts: false
+    become: true
+    become_user: root
+    become_method: sudo
+    tasks:
+       - name: Copy shell script to Remote machine
+         copy:
+          src: /data/scripts/zabbixstart.sh
+          dest: /tmp/zabbixstart.sh
+          #dest: /tmp/{{ inventory_hostname }}/zabbixstart.sh
+          #when: "{{ groups['zabbixstart']}}"
+       - name: Execute the shell scirpt
+         command: 'sh /tmp/zabbixstart.sh'
+         #when: "{{ groups['zabbixstart'] }}"
+		 
+  - name: start the zabbix service in nginx remote_machine
+    hosts: nginxrelease  
+    gather_facts: false
+    become: true
+    become_user: root
+    become_method: sudo
+    tasks:
+       - name: Copy shell script to Remote machine
+         copy:
+          src: /data/scripts/zabbixstart.sh
+          dest: /tmp/zabbixstart.sh
+          #dest: /tmp/{{ inventory_hostname }}/zabbixstart.sh
+          #when: "{{ groups['zabbixstart']}}"
+       - name: Execute the shell scirpt
+         command: 'sh /tmp/zabbixstart.sh'
+         #when: "{{ groups['zabbixstart'] }}"
+  - name: start the zabbix service in nginx remote_machine
+    hosts: qarabbitmq
+    gather_facts: false
+    become: true
+    become_user: root
+    become_method: sudo
+    tasks:
+       - name: Copy shell script to Remote machine
+         copy:
+          src: /data/scripts/zabbixstart.sh
+          dest: /tmp/zabbixstart.sh
+          #dest: /tmp/{{ inventory_hostname }}/zabbixstart.sh
+          #when: "{{ groups['zabbixstart']}}"
+       - name: Execute the shell scirpt
+         command: 'sh /tmp/zabbixstart.sh'
+         #when: "{{ groups['zabbixstart'] }}"
+  - name: start the zabbix service in nginx remote_machine
+    hosts: skylarkdev
+    gather_facts: false
+    become: true
+    become_user: root
+    become_method: sudo
+    tasks:
+       - name: Copy shell script to Remote machine
+         copy:
+          src: /data/scripts/zabbixstart.sh
+          dest: /tmp/zabbixstart.sh
+          #dest: /tmp/{{ inventory_hostname }}/zabbixstart.sh
+          #when: "{{ groups['zabbixstart']}}"
+       - name: Execute the shell scirpt
+         command: 'sh /tmp/zabbixstart.sh'
+         #when: "{{ groups['zabbixstart'] }}"
+
+
+
+
+
+
+
+

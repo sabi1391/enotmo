@@ -1,0 +1,149 @@
+#!/bin/bash
+
+# Set the current date
+current_date=$(date +%Y-%m-%d)
+
+# Set the S3 bucket name and desired backup directory
+bucket_name="your-s3-bucket"
+backup_dir="/path/to/backup/directory"
+
+# Remove previous day's backup if it exists
+previous_date=$(date -d "yesterday" +%Y-%m-%d)
+aws s3 rm s3://$bucket_name/$previous_date --recursive
+
+# Create a tar archive of the backup directory
+tar -czvf $backup_dir/backup_$current_date.tar.gz $backup_dir/*
+
+# Upload the backup to S3
+aws s3 cp $backup_dir/backup_$current_date.tar.gz s3://$bucket_name/$current_date/
+
+
+---------------------------------------------------------------------------
+current_date=$(date +%Y-%m-%d)
+bucket_name="samplebackuptest"
+backup_dir="/opt/skylark/nginxbackup"
+
+previous_date=$(date -d "yesterday" +%Y-%m-%d)
+aws s3 rm s3://$bucket_name/$previous_date --recursive
+
+cp /opt/skylark/nginx  /opt/skylark/nginxbackup
+
+gzip */opt/skylark/nginxbackup
+
+#tar -czvf $backup_dir/backup_$current_date.tar.gz $backup_dir/*
+
+aws s3 cp $backup_dir/backup_$current_date.tar.gz s3://$bucket_name/backupfolder/$current_date/
+
+
+----------------------------------------------------
+
+current_date=$(date +%Y-%m-%d)
+bucket_name="samplebackuptest"
+backup_dir="/opt/backup/"
+previous_date=$(date -d "yesterday" +%Y-%m-%d)
+
+aws s3 rm s3://$bucket_name/$previous_date --recursive
+
+cp -r /opt/nginx/conf/nginx.conf   /$backup_dir/$current_date/
+cp -r /opt/nginx/conf.d/*   /$backup_dir/$current_date/
+
+
+#gzip */opt/skylark/nginxbackup
+
+#tar -czvf $backup_dir/backup_$current_date.tar.gz $backup_dir/*
+
+#aws s3 cp $backup_dir/backup_$current_date.tar.gz s3://$bucket_name/backupfolder/$current_date/
+
+
+[20:43] Nishanth kumar
+
+year=$(date +"%Y")
+mondate=$(date +"%m")
+
+days=$(date +"%d")
+
+===============================================================================================================
+ #/bin/sh
+
+current_date=$(date +%Y-%m-%d)
+year=$(date +"%Y")
+mondate=$(date +"%m")
+days=$(date +"%d")
+dayago=`(date --date='2 days ago' '+%Y%m%d')`
+bucket_name="samplebackuptest"
+backup_dir="/opt/backup"
+#previous_date=$(date -d "yesterday" +%Y-%m-%d)
+
+aws s3 rm s3://$bucket_name/$year/$mondate/nonprod_nginx-$previous_date --recursive
+#rm -rf $backup_dir/
+mkdir -p $backup_dir/$current_date/nonprod_nginx
+cd $backup_dir/$current_date/nonprod_nginx/
+
+cp -r /opt/nginx/conf/nginx.conf .
+cp -r /opt/nginx/conf.d/* .
+
+
+cd $backup_dir/$current_date/
+zip -r nonprod_nginx-$current_date.zip nonprod_nginx
+
+aws s3 cp nonprod_nginx-$current_date.zip s3://$bucket_name/$year/$mondate/$days/
+
+#zip -r nonprod_nginx.zip  nonprod_nginx
+
+
+#gzip */opt/skylark/nginxbackup
+
+#tar -czvf $backup_dir/backup_$current_date.tar.gz $backup_dir/*
+
+#aws s3 cp $backup_dir/backup_$current_date.tar.gz s3://$bucket_name/backupfolder/$current_date/
+
+ dayago=`(date --date='1 days ago' '+%d')`
+
+
+previous_day=`(date --date='1 days ago' '+%d')`
+
+dayago=(date --date='1 days ago' '+%Y-%m-%d')
+
+dayago=`(date --date='1 days ago' '+%Y-%M-%d')`
+==================================================================
+
+ #/bin/sh
+
+current_date=$(date +%Y-%m-%d)
+year=$(date +"%Y")
+mondate=$(date +"%m")
+days=$(date +"%d")
+bucket_name="samplebackuptest"
+backup_dir="/opt/backup"
+#previous_date=$(date -d "yesterday" +%Y-%m-%d)
+#dayago=$(date --date='1 days ago' '+%Y%m%d')
+
+previous_day=`(date --date='1 days ago' '+%d')`
+
+dayago=`(date --date='1 days ago' '+%Y-%m-%d')`
+
+rm -rf $backup_dir/*
+
+aws s3 rm s3://$bucket_name/$year/$mondate/$previous_day/nonprod_nginx-$dayago.zip
+#s3://samplebackuptest/2023/06/13/nonprod_nginx-2023-06-13.zip
+
+mkdir -p $backup_dir/$current_date/nonprod_nginx
+cd $backup_dir/$current_date/nonprod_nginx/
+
+cp -r /opt/nginx/conf/nginx.conf .
+cp -r /opt/nginx/conf.d/* .
+
+
+cd $backup_dir/$current_date/
+zip -r nonprod_nginx-$current_date.zip nonprod_nginx
+
+aws s3 cp nonprod_nginx-$current_date.zip s3://$bucket_name/$year/$mondate/$days/
+
+#zip -r nonprod_nginx.zip  nonprod_nginx
+
+
+#gzip */opt/skylark/nginxbackup
+
+#tar -czvf $backup_dir/backup_$current_date.tar.gz $backup_dir/*
+
+#aws s3 cp $backup_dir/backup_$current_date.tar.gz s3://$bucket_name/backupfolder/$current_date/
