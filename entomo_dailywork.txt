@@ -7,7 +7,7 @@ steps used while build
 6.Create the show.entomo.co URL in route53
 7.Take backup of backend build.
 8.adding the properties is config file 
-9.Deploy backend build with new build along with new property files
+9.Deploy backend build  with new build along with new property files
 10.Clear the cache.
 11.Remove the maintance and replace with the nginx configuration file
 12.Test and Reload the nginx
@@ -31,5 +31,50 @@ alias /opt/nginx/html;
 index maintenance.html;
         }
 
-=========================================================================================================================================
+=========================================================================================================================================data dump and sata synch
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjmirror_db > apjmirror_db_09022023.sql
+15843(screen -r)
+
+gunzip smm_live_20230208.sql.gz
+22937
+
+mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjmirror_db <  smm_live_20230208.sql
+
+zip apjmirror_db_09022023.sql.zip apjmirror_db_09022023.sql
+
+gzip apjmirror_db_09022023.sql.gz apjmirror_db_09022023.sql
+zip -r drluat_11112022.sql.zip drluat_11112022.sql
+-------------mongo---------------------
+mongodump  -u adminUser --authenticationDatabase "admin" -p Xps6U9QnMrUSFWkF --db  TomorrowCareer_show --collection tenantpreferences --out TomorrowCarer_show_tenantpreferences_23022023
+mongodump --uri mongodb+srv://jkprodmongo:aDrTYdc2d1sh4LtL@jklive.3vxac.mongodb.net/smmlive_new    --archive=/smmlive_new-18102023.gz --gzip
+
+===========================================================================================================================================================
+aws s3 cp smmlive_jk_STR_DET_PROGRAM_CONFIG_14072023.sql.zip s3://apjbackup/backup_db/mariadb/2023/07/14/ --recursive
+aws s3 cp smmlive_KPI_MAS_SCALE_VALUE_18072023.sql.gz s3://awsjkbackup/backup_db/mariadb/2023/07/18/
+
+db.grantRolesToUser("sunil",[{ role: "read", db: "TomorrowCareer" }])
+db.revokeRolesFromUser("sunil",[{ role: "readWrite", db: "TomorrowCareer" }])
+
+db.grantRolesToUser("ritesh",[{ role: "read", db: "TomorrowCareer" }])
+db.revokeRolesFromUser("ritesh",[{ role: "readWrite", db: "TomorrowCareer" }])
+db.revokeRolesFromUser("ritesh",[{ role: "readWrite", db: "admin" }])
+
+
+00 19 * * * sh -x /opt/scripts/mongodbackup.sh >> /opt/scripts/logs/mongobackuplogs.log 2>&1
+
+mysql -u <username> -p<password> <database_name> < <path_to_sql_file> 2>&1 | tee <path_to_log_file>
+===================================================================================
+tail -f /opt/nginx/logs/access.log | grep  drluattest.entomo.co
+
+
+
+
+
+
+
+
+
+
+
+
 
