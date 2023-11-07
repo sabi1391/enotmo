@@ -1,0 +1,251 @@
+
+centos -- yum
+RHEL   -- yum
+ubuntu -- apt or apt-get
+
+yum install tree -y
+yum remove  tree  -y
+yum update  tree -yum
+yum update
+
+-->sudo su yum install tree -yum
+
+cd ~  (to go home directory)
+-->cd /home (to check users)
+ls
+--> se nu (to see line numbers in file)
+/word (to serch particular word in file
+--> cat -n filname (to see file content in with numbers)
+--> history | grep serchingword
+
+
+--> gzip *.txt
+--> gzip filename.sql
+--> gunzip filename.sql.gz
+--> zip filename.sql.zip filename.sql
+--> unzip filename.zip
+
+sudo su
+--> du -sh *
+--> du -sh /*
+--> df -kh
+--> free -mh
+
+part:2
+
+mkdir --> to create directory
+mkdir -v directoryname ---> v=verbs, create directory and show msg as created
+mkdri -p directoryname/directoryname/ --> p=parent, create sub directories under directory
+mkdir -m 700 directoryname --> m stads for mode, its will grant permission to directory
+
+
+ls --> list of files/directories
+ls /tmp/directry/ 
+ls -ls --> to sort files by size
+ls  -l --> list out files with permissions size time and date
+ls -ltr --> (l=long list, t=accesstime, r=reverseorder)
+ls -la --> display hidden files
+
+part:3
+
+rm -rf -->removefiles or directories
+rmdir directoryname--> remove empty directoriesonly
+find . -type f -empty --> to find epty file in current directory
+find / -type d -empty --> to find empty directory in roo folder
+
+chmod 777 filename
+chmod -r 777 directory_name
+
+
+part4:  
+
+----Displaying command------
+
+cat
+cat -n filename
+head
+head -10 filename
+tail
+tail -5 filename
+tail -f log.log
+sed -n 12p filename
+--> this will dispaly in between range as between 12 line to 14 line
+sed -n "12,14p" filename
+sed "s/red/blue/g filename
+--> this -i will chages in file output also
+ex: 
+sed -i "s/hi/hello/g" practice
+
+--System Resourses commands-----
+
+--> this below 3 commends will give which user is loogedin and what doing and average load of cpu
+who 
+users
+w
+uname : linux
+To know distribution of which linux:
+cd /etc
+there will release folder
+cat /etc/*release
+-->How to know which distributaion  of OS u are using?
+Each distribution having some specific files names in etc folder, it contains all details of distribution.
+
+
+uptime : server/system running time
+
+--> history | grep serchingword
+
+==============================mongo restore command to db
+mongorestore -h ipofhost  --username adminUser --password W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db destination sourcefile --drop
+note : only dson file we can restore as we stored data in bzon formate
+
+exmaples:
+mongorestore -h 172.31.23.229 --username adminUser --password W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db ctuat_careermodule collaborators.bson --drop
+
+
+grep -all 
+
+ 
+ 
+ 
+
+Dockers:
+docker volume
+docker system prune
+cd logs
+>admin.log
+cd /var/lib/docker/containers/
+cd container_id
+ls
+docker network prune
+
+
+
+
+useradd username
+passwd  username
+
+usergroup groupname
+
+vi /etc/ssh/sshd_config
+
+passwd authentication true
+
+adduser -G groupname
+
+chmod 777 
+chmod 400
+
+
+vi /etc/passwd 
+
+vi users
+
+vi /et/passwd
+
+zabbix:x:997:994:Zabbix Monitoring System:/var/lib/zabbix:/sbin/nologin
+mongod:x:996:993:mongod:/var/lib/mongo:/bin/false
+gitlab-runner:x:995:992:GitLab Runner:/home/gitlab-runner:/bin/bash
+
+
+
+=================================================================================
+
+We are using a branchng startagy in our version control system , In my current org we are using git lab and bit bucket, We have a master branch where we have stored alll related code .
+Master branch access  only having a lead/architech , once we pushed code to master branch the pipeline will be execute in bitbucket to check the code quality and code coverage. onceget succeful we have implemented sonar qube for quality test of our code itf it will get failure return to develpoer if its success will the code will push to the dev/qa environment.
+ Qa team will start the testing once testing is fine we have report called as preprod env where we can call as mirror of the prod environment.
+Once we get the sign of from the customer support team and respective stack holders will push the code to the prod environment.
+
+
+In our environment we have 3 branching startagy like dev where we used to do R&D purpuse , QA where we can push all our user stories, Bug fixes, minor upgartion etc and we have a preprod environmentwhere we can test all the new release and user stories before deploying to the prod.
+
+Agile methodology:
+The Agile methodology is a project management approach that involves breaking the project into phases and emphasizes continuous collaboration and improvement. 
+ 
+there are the five type of stages
+ideation
+development 
+testing
+development
+operation
+ 
+Docker commands: 
+docker ps
+docker ps -a
+docker cp filename cid
+docker run imagename
+docker images 
+docker exec -it cid
+docker build -d imagename
+docker images --filter "since=3m" 
+docker logs -f cid
+docker logs -n1000 cid
+docker logs -f --"since=3m" cid
+docker logs -f cid | grep "2023-11-04:18:05:30" 
+docker network ls
+docker node ls
+docker cp
+copy sorce destination
+move 
+
+ec2
+s3
+rout53
+security groups
+rds
+lmbda
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[16:47] G Balaji
+
+"Usage Data CT"
+
+tail -f log | grep Usage Data CT
