@@ -1,0 +1,284 @@
+pipeline {
+
+       parameters {
+       string(name: 'branchname', defaultValue: 'release', description: 'Branch name')
+     
+       string(name: 'commitorbranch', defaultValue: 'release', description: 'Enter the commmit ID or branchname')
+       string(name: 'epmsconfigfile', defaultValue: 'apjuat_epms_07022022', description: 'Enter the swarm config file for epms')
+       string(name: 'epmsadminconfigfile', defaultValue: 'apjuat_epmsadmin_07022022', description: 'Enter the swarm config file for epmsadmin')
+       string(name: 'biconfigfile', defaultValue: 'apjuat_bi_07022022', description: 'Enter the swarm config file for bi')
+       string(name: 'isaot', defaultValue: 'yes', description: 'Is UI  Build is AOT')
+       string(name: 'buildcomponents', defaultValue: '2', description: 'which all components you wan to build \n 1. Only docker \n 2. only Static pages  \n 3. Both docker and static pages')
+
+
+}   
+
+    environment {
+        profile= "commonDev"
+    
+                def builddate = sh(script: "echo skylark-7.0-`date +%d%m%Y%H%M%S`", returnStdout: true).trim()
+
+        uiprofile= "prod"
+    }
+        tools {
+          maven 'maven3'
+    }
+
+       agent any
+    stages {
+        stage("SCM Checkout") {
+            steps {
+           script {
+               wrap([$class: 'BuildUser']) {
+  sh 'echo ${BUILD_USER}'
+env.user1="${BUILD_USER}"
+    }
+            def scmVars=checkout([$class: 'GitSCM', branches: [[name: "${params.commitorbranch}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'gitlab', url: 'https://labmirror.kpisoft.com/devops/skylark.git']]])
+            svnRevision =scmVars.GIT_COMMIT
+            shortcommitId = sh(returnStdout: true, script: 'git rev-parse HEAD|cut -c1-7')
+            commitId = sh(returnStdout: true, script: 'git rev-parse HEAD')
+
+         
+          
+                env.BUILDVERSION = "${env.builddate}-${svnRevision}-${params.branchname}"
+            
+                env.BUILDVERSION1 = "${env.builddate}-${shortcommitId}"
+                         
+
+            echo "${env.BUILDVERSION}"
+              
+               }
+            }
+        }
+stage("Build Skylark Application") {
+    when {
+    expression {
+               params.buildcomponents == "1" || params.buildcomponents  == "3"
+        }
+    }
+    steps {
+  
+        sh "mvn  clean  install  -DskipTests=true -Dsvn.revision=${env.BUILDVERSION} -PcommonDev"
+         
+
+
+    }
+}
+   
+    stage("Build Docker image") {
+    when {
+    expression {
+               params.buildcomponents == "1" || params.buildcomponents  == "3"
+        }
+    }
+    steps {
+  
+           dir('app-bundle') {
+               sh 'cp /data/dockerfiles/Dockerfile-skylark Dockerfile'
+               sh 'cp /data/dockerfiles/secret.sh . '
+               sh 'cp target/app-bundle.jar /tmp/'
+               sh 'mvn dockerfile:build'
+               sh 'cp target/app-bundle.jar /tmp/'
+            }               
+
+
+    }
+}
+
+
+stage("push  docker image to dockerhub") {
+    when {
+    expression {
+               params.buildcomponents == "1" || params.buildcomponents  == "3"
+        }
+    }
+    steps {
+  
+            sh "docker tag skylarkkpisoft/app-bundle:7.0-SNAPSHOT kpisoft/app-bundle:apjuat${env.BUILDVERSION}"
+                withDockerRegistry(credentialsId: 'dockerhub', url: "") {
+
+                    sh "docker push kpisoft/app-bundle:apjuat${env.BUILDVERSION}"
+            }          
+
+
+    }
+}
+
+stage ("Version Configuration"){
+      steps{
+          sh 'cp webshellV2/src/assets/i18n/en_US_Skylark.json webshellV2/src/assets/i18n/en_US.json'
+          sh 'cp webadmin/src/assets/i18n/en_US_skylark.json webadmin/src/assets/i18n/en_US.json'
+          sh "sed -i 's/{version}/ '${env.BUILDVERSION}'/g' webshellV2/src/app/core/core-service/configuration.ts"
+          sh "sed -i 's/{version}/ '${env.BUILDVERSION}'/g' webadmin/src/app/shared/services/configuration.ts"
+     
+          
+      }
+    }
+
+
+        stage ("UI Build"){
+        parallel {
+            stage("HOME UI Build using NPM") {
+                steps{
+                    script{
+                    dir ('webshellV2'){
+                        if (params.isaot == "yes"){
+                if (params.buildcomponents == "2" || params.buildcomponents == "3") {    
+                            sh 'npm install'
+                            sh 'npm rebuild node-saas'
+                            sh "npm run build:aot:prod"
+                        }
+                        else {
+                            
+                            echo "UI Build is not select in build componnets"
+
+                        }
+                        }
+                        else {
+                            if (params.buildcomponents == "2" || params.buildcomponents == "3") {
+                            sh 'npm install'
+                            sh 'npm rebuild node-saas'
+                            sh "npm run build:prod"  
+                        }
+                        else {
+                            
+                            echo "UI Build is not select in build componnets"
+
+                        }
+                        }
+           }
+                    } 
+          }
+    }
+
+    stage("Building Admin UI using NPM"){
+        steps{
+            script{
+            dir('webadmin'){
+
+                if (params.isaot == "yes"){
+                if (params.buildcomponents == "2" || params.buildcomponents == "3") {    
+                            sh 'npm install'
+                            sh 'npm rebuild node-saas'
+                            sh "npm run build:aot:prod"
+                        }
+                        else {
+                            
+                            echo "UI Build is not select in build componnets"
+
+                        }
+                        }
+                        else {
+                            if (params.buildcomponents == "2" || params.buildcomponents == "3") {
+                            sh 'npm install'
+                            sh 'npm rebuild node-saas'
+                            sh "npm run build:prod"  
+                        }
+                        else {
+                            
+                            echo "UI Build is not select in build componnets"
+
+                        }
+                        }
+            }
+        }
+        }
+
+    }
+
+        }
+    }
+
+
+
+
+stage("Move the static files  to the deployment location ") {
+    when {
+    expression {
+               params.buildcomponents == "2" || params.buildcomponents  == "3"
+        }
+    }
+    steps {
+  
+    		sh 'rm -rf /data/staticfiles/apjuat/home'
+            sh 'rm -rf /data/staticfiles/apjuat/admin'
+            sh 'mkdir /data/staticfiles/apjuat/home'
+            sh 'mkdir /data/staticfiles/apjuat/admin'
+            sh 'cp -r webshellV2/dist/* /data/staticfiles/apjuat/home'
+            sh 'cp -r webadmin/dist/* /data/staticfiles/apjuat/admin'
+            sh "mkdir /data/staticfiles/apjuat/${env.BUILDVERSION}-${env.uiprofile}"
+            sh "cp -r /data/staticfiles/apjuat/home /data/staticfiles/apjuat/${env.BUILDVERSION}-${env.uiprofile}"
+            sh "cp -r /data/staticfiles/apjuat/admin /data/staticfiles/apjuat/${env.BUILDVERSION}-${env.uiprofile}"
+           
+
+
+    }
+}
+
+
+
+      
+stage("deploy docker image") {
+    when {
+    expression {
+               params.buildcomponents == "1" || params.buildcomponents  == "3"
+               
+        }
+    }
+    steps {
+    script{
+         env.tagname = "apjuat${env.BUILDVERSION}"
+      sh "ansible-playbook /data/playbooks/apj_uat_docker_onetouch.yml --extra-vars  'tagname=${env.tagname}  epmsconfigfile=${params.epmsconfigfile} epmsadminconfigfile=${params.epmsadminconfigfile} biconfigfile=${params.biconfigfile}'"
+         
+}
+
+    }
+}
+
+
+
+
+
+stage("deploy static files to nginx server") {
+    when {
+    expression {
+               params.buildcomponents == "2" || params.buildcomponents  == "3"
+        }
+    }
+    steps {
+  
+      sh "ansible-playbook /data/playbooks/apj_uat_nginx.yml"
+         
+
+
+    }
+}
+
+      
+
+    
+
+
+
+    }    
+    post{
+        always{
+            echo "========always========"
+            cleanWs()
+        }
+        success{
+                        echo "========pipeline execution success========"
+        
+        office365ConnectorSend message: "Build for APJ UAT  ", status:"Success ", webhookUrl:'https://kpisoft.webhook.office.com/webhookb2/659990b9-b909-4c5b-ac06-dd168977b423@4e7fc100-a3ca-4172-9394-29dbfec53920/JenkinsCI/eb0ed612f124488dbc6e7e565d68f8e2/bd33efa5-ffc6-4da4-83ca-6b257f062230',factDefinitions: [[name: "Environment",template:"${params.environment}"],[name: "Build details",template: "${env.BUILDVERSION}"],[name: "UserExecuted", template: "${env.user1}"]], color: "d00000"
+         
+        }
+        failure{
+            echo "========pipeline execution failed========"
+
+    office365ConnectorSend message: "Build for APJ UAT  ", status:"Failed ", webhookUrl:'https://kpisoft.webhook.office.com/webhookb2/659990b9-b909-4c5b-ac06-dd168977b423@4e7fc100-a3ca-4172-9394-29dbfec53920/JenkinsCI/eb0ed612f124488dbc6e7e565d68f8e2/bd33efa5-ffc6-4da4-83ca-6b257f062230',factDefinitions: [[name: "Environment",template:"${params.environment}"],[name: "Build details",template: "${env.BUILDVERSION}"],[name: "UserExecuted", template: "${env.user1}"]], color: "d00000"
+ 
+        }
+
+
+    }
+}

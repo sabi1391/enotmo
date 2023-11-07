@@ -1,0 +1,264 @@
+pipeline {
+
+       parameters {
+       string(name: 'branchname', defaultValue: 'release', description: 'Branch name')
+     
+       string(name: 'commitorbranch', defaultValue: 'release', description: 'Enter the commmit ID or branchname')
+       string(name: 'epmsconfigfile', defaultValue: 'apjmirror_epms_30102023', description: 'Enter the swarm config file for epms')
+       string(name: 'epmsadminconfigfile', defaultValue: 'apjmirror_epmsadmin_30102023', description: 'Enter the swarm config file for epmsadmin')
+       string(name: 'biconfigfile', defaultValue: 'apjmirror_bi_30102023', description: 'Enter the swarm config file for bi')
+       string(name: 'isaot', defaultValue: 'yes', description: 'Is UI  Build is AOT')
+       string(name: 'buildcomponents', defaultValue: '2', description: 'which all components you wan to build \n 1. Only docker \n 2. only Static pages  \n 3. Both docker and static pages')
+}   
+
+    environment {
+        profile= "commonDev"
+    
+                def builddate = sh(script: "echo skylark-7.0-`date +%d%m%Y%H%M%S`", returnStdout: true).trim()
+
+        uiprofile= "prod"
+    }
+        tools {
+          maven 'maven3'
+    }
+
+       agent any
+    stages {
+        stage("SCM Checkout") {
+            steps {
+           script {
+           // wrap([$class: 'BuildUser']) {
+			//sh 'echo ${BUILD_USER}'
+			//env.user1="${BUILD_USER}"
+			//}
+            def scmVars=checkout([$class: 'GitSCM', branches: [[name: "${params.commitorbranch}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'bitbucket', url: 'https://bitbucket.org/entomo-experience/skylark.git']]])
+            svnRevision =scmVars.GIT_COMMIT
+            shortcommitId = sh(returnStdout: true, script: 'git rev-parse HEAD|cut -c1-7')
+            commitId = sh(returnStdout: true, script: 'git rev-parse HEAD')
+
+         
+          
+                env.BUILDVERSION = "${env.builddate}-${svnRevision}-${params.branchname}"
+            
+                env.BUILDVERSION1 = "${env.builddate}-${shortcommitId}"
+                         
+
+            echo "${env.BUILDVERSION}"
+              
+               }
+            }
+        }
+ stage("Build Docker image") {
+    when {
+    expression {
+               params.buildcomponents == "1" || params.buildcomponents  == "3"
+        }
+    }
+    steps {
+  
+        dir('./'){
+                    sh """docker build -t "kpisoft/app-bundle:apjmirror${env.BUILDVERSION}" --build-arg "GIT_COMMIT=${env.BUILDVERSION}" ."""
+					 sh "docker push kpisoft/app-bundle:apjmirror${env.BUILDVERSION}"
+                }              
+    }
+}
+stage ("Version Configuration"){
+      steps{
+          sh 'cp webshellV2/src/assets/i18n/en_US_Skylark.json webshellV2/src/assets/i18n/en_US.json'
+          sh 'cp webadmin/src/assets/i18n/en_US_skylark.json webadmin/src/assets/i18n/en_US.json'
+          sh "sed -i 's/{version}/ '${env.BUILDVERSION}'/g' webshellV2/src/app/core/core-service/configuration.ts"
+          sh "sed -i 's/{version}/ '${env.BUILDVERSION}'/g' webadmin/src/app/shared/services/configuration.ts"         
+      }
+    }
+
+
+        stage ("UI Build"){
+        parallel {
+            stage("HOME UI Build using NPM") {
+                steps{
+                    script{
+                    dir ('webshellV2'){
+                        if (params.isaot == "yes"){
+                if (params.buildcomponents == "2" || params.buildcomponents == "3") {
+                           sh "sed -i 's/--max_old_space_size=8192/--max_old_space_size=16384/g' package.json"
+                            sh 'npm install'
+                            sh 'npm rebuild node-saas'
+                            sh "npm run build"
+                        }
+                        else {
+                            
+                            echo "UI Build is not select in build componnets"
+
+                        }
+                        }
+                        else {
+                            if (params.buildcomponents == "2" || params.buildcomponents == "3") {
+                            sh 'npm install'
+                            sh 'npm rebuild node-saas'
+                            sh "npm run build"  
+                        }
+                        else {
+                            
+                            echo "UI Build is not select in build componnets"
+
+                        }
+                        }
+           }
+                    } 
+          }
+    }
+
+    stage("Building Admin UI using NPM"){
+        steps{
+            script{
+            dir('webadmin'){
+
+                if (params.isaot == "yes"){
+                if (params.buildcomponents == "2" || params.buildcomponents == "3") {    
+                            sh 'npm install'
+                            sh 'npm rebuild node-saas'
+                            sh "npm run build"
+                        }
+                        else {
+                            
+                            echo "UI Build is not select in build componnets"
+
+                        }
+                        }
+                        else {
+                            if (params.buildcomponents == "2" || params.buildcomponents == "3") {
+                            sh 'npm install'
+                            sh 'npm rebuild node-saas'
+                            sh "npm run build"  
+                        }
+                        else {
+                            
+                            echo "UI Build is not select in build componnets"
+
+                        }
+                        }
+            }
+        }
+        }
+
+    }
+
+        }
+    }
+
+
+
+
+stage("Move the static files  to the deployment location ") {
+    when {
+    expression {
+               params.buildcomponents == "2" || params.buildcomponents  == "3"
+        }
+    }
+    steps {
+  
+    		sh 'rm -rf /data/staticfiles/apjmirror/home'
+            sh 'rm -rf /data/staticfiles/apjmirror/admin'
+            sh 'mkdir /data/staticfiles/apjmirror/home'
+            sh 'mkdir /data/staticfiles/apjmirror/admin'
+            sh 'cp -r webshellV2/dist/* /data/staticfiles/apjmirror/home'
+            sh 'cp -r webadmin/dist/* /data/staticfiles/apjmirror/admin'
+            sh "mkdir /data/staticfiles/apjmirror/${env.BUILDVERSION}-${env.uiprofile}"
+            sh "cp -r /data/staticfiles/apjmirror/home /data/staticfiles/apjmirror/${env.BUILDVERSION}-${env.uiprofile}"
+            sh "cp -r /data/staticfiles/apjmirror/admin /data/staticfiles/apjmirror/${env.BUILDVERSION}-${env.uiprofile}"
+           
+    }
+}
+stage("Build Docker nodejs image"){
+        steps{
+            sh "pwd"
+            sh "ls -al"
+           dir('ct-api') {
+               sh "pwd"
+               sh "ls -al"
+               sh "cp -r /data/dockerfiles/Dockerfile-nodejs14  Dockerfile"
+
+	       sh """docker build -t "kpisoft/maprecruit:${env.BUILDVERSION}-${params.envname}" --build-arg "GIT_COMMIT=${env.BUILDVERSION}" ."""
+
+            }
+       }
+   }
+stage("push  docker nodejs image to dockerhub") {
+        steps{
+            sh "docker push kpisoft/maprecruit:${env.BUILDVERSION}-${params.envname}"
+      }
+
+}
+stage("Build Docker chatgpt image"){
+        steps{
+            sh "pwd"
+            sh "ls -al"
+           dir('cgpt') {
+               sh "pwd"
+               sh "ls -al"
+               sh "npm install --legacy-peer-deps"
+
+	       sh """docker build -t "kpisoft/chatgpt:${env.BUILDVERSION}" --build-arg "GIT_COMMIT=${env.BUILDVERSION}" ."""
+            sh "docker push kpisoft/chatgpt:${env.BUILDVERSION}"
+            }
+       }
+   }
+
+stage("deploy static files to nginx server") {
+    when {
+    expression {
+               params.buildcomponents == "2" || params.buildcomponents  == "3"
+        }
+    }
+    steps {
+  
+      sh "ansible-playbook /data/playbooks/apj_mirror_nginx_new.yml"
+         
+    }
+}
+      
+stage("deploy docker image") {
+    when {
+    expression {
+               params.buildcomponents == "1" || params.buildcomponents  == "3"
+               
+        }
+    }
+    steps {
+    script{
+         env.tagname = "apjmirror${env.BUILDVERSION}"
+		 echo "${env.tagname}"
+		 env.tagnamecarrer = "${env.BUILDVERSION}-${params.envname}"
+		 echo "${env.tagnamecarrer}"
+		 env.tagchatgpt= "${env.BUILDVERSION}"
+		 echo "${env.tagchatgpt}"
+      sh "ansible-playbook /data/playbooks/apj_mirror_docker_onetouch_new.yml --extra-vars  'tagchatgpt=${env.tagchatgpt} tagname=${env.tagname} tagnamecarrer=${env.tagnamecarrer}  epmsconfigfile=${params.epmsconfigfile} epmsadminconfigfile=${params.epmsadminconfigfile} biconfigfile=${params.biconfigfile}'"
+	
+}
+
+    }
+}
+
+
+    }    
+    post{
+        always{
+            echo "========always========"
+            cleanWs()
+        }
+        success{
+                        echo "========pipeline execution success========"
+        
+       office365ConnectorSend message: "Build for APJ Mirror  ", status:"Success ", webhookUrl:'https://kpisoft.webhook.office.com/webhookb2/659990b9-b909-4c5b-ac06-dd168977b423@4e7fc100-a3ca-4172-9394-29dbfec53920/JenkinsCI/eb0ed612f124488dbc6e7e565d68f8e2/bd33efa5-ffc6-4da4-83ca-6b257f062230',factDefinitions: [[name: "Environment",template:"${params.environment}"],[name: "Build details",template: "${env.BUILDVERSION}"],[name: "UserExecuted", template: "${env.user1}"]], color: "d00000"
+         
+        }
+        failure{
+            echo "========pipeline execution failed========"
+
+    office365ConnectorSend message: "Build for APJ Mirror  ", status:"Failed ", webhookUrl:'https://kpisoft.webhook.office.com/webhookb2/659990b9-b909-4c5b-ac06-dd168977b423@4e7fc100-a3ca-4172-9394-29dbfec53920/JenkinsCI/eb0ed612f124488dbc6e7e565d68f8e2/bd33efa5-ffc6-4da4-83ca-6b257f062230',factDefinitions: [[name: "Environment",template:"${params.environment}"],[name: "Build details",template: "${env.BUILDVERSION}"],[name: "UserExecuted", template: "${env.user1}"]], color: "d00000"
+ 
+        }
+
+
+    }
+}

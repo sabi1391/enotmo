@@ -1,0 +1,50 @@
+QA-ENV_stop----jenkins pipeline
+
+here build periadically given as 30 17 * * 1-6  to run job on this time
+
+--->releaseskylark_stop.py file will be safe in 
+
+
+
+
+
+pipeline{
+    agent any
+        stages{
+         //stage("Stop the amazon documentDB"){
+          //steps{
+            //sh 'aws docdb stop-db-cluster --db-cluster-identifier qanonprod-mongo --profile jenkinsmum --region ap-south-1'
+         //}
+         //}
+		 stage("Stop the non prod RDS server"){
+          steps{
+            sh 'aws rds stop-db-instance --db-instance-identifier mum-nonprod --profile jenkinsmum --region ap-south-1'
+         }
+         }
+         stage(" stop the EC2 instance ") {
+            steps{
+                sh 'python3  /data/python/releaseskylark_stop.py'
+            }
+         }        
+        }
+    
+ post{
+        always{
+            echo "========always========"
+            cleanWs()
+        }
+        success{
+                        echo "========pipeline execution success========"
+        
+        office365ConnectorSend message: "Build for QA-ENV Stop", status:"Success", webhookUrl:'https://kpisoft.webhook.office.com/webhookb2/29edff85-564f-41c3-b80c-f1637422af4f@4e7fc100-a3ca-4172-9394-29dbfec53920/IncomingWebhook/44edaffe7abf4a6ea6f81092c4f14a5a/dda03655-24cf-431a-aac4-39268acfc3ea',factDefinitions: [[name: "Environment",template:"${JOB_NAME}"],[name: "Build details",template: "${env.BUILDVERSION}"]], color: "00d000"
+        mail bcc: 'devops@entomo.co', body: 'Build for QA-ENV Stopped via JENKINS is success', cc: 'devops@entom.co', from: 'noreply@kpisoft.com', replyTo: 'nishanth.kumar@entomo.co', subject: 'Job Trigger for QA-ENV Stopped Got success', to: 'devops@entomo.co'
+         
+        }
+        failure{
+            echo "========pipeline execution failed========"
+
+        office365ConnectorSend message: "Build for QA-ENV_stop ", status:"Failed", webhookUrl:'https://kpisoft.webhook.office.com/webhookb2/29edff85-564f-41c3-b80c-f1637422af4f@4e7fc100-a3ca-4172-9394-29dbfec53920/IncomingWebhook/44edaffe7abf4a6ea6f81092c4f14a5a/dda03655-24cf-431a-aac4-39268acfc3ea',factDefinitions: [[name: "Environment",template:"${JOB_NAME}"],[name: "Build details",template: "${env.BUILDVERSION}"]], color: "00d000"
+        mail bcc: 'devops@entomo.co', body: 'Build for QA-ENV Stopped via JENKINS is failure', cc: 'devops@entom.co', from: 'noreply@kpisoft.com', replyTo: 'nishanth.kumar@entomo.co', subject: 'Job Trigger for QA-ENV Stopped Got Failed', to: 'devops@entomo.co'
+        }
+    }
+}

@@ -1,0 +1,52 @@
+pipeline{
+    agent any
+    stages{
+        stage("Start the instance "){
+            steps{
+            sh 'ansible-playbook /data/playbooks/startbackup.yml  --vault-password-file /data/playbooks/ansibleadminpass.yml'
+            }
+		 }	
+        stage(" Mariadb Backup"){
+         parallel { 
+          stage("Start UAT mariadb backup"){
+           steps{
+            sh ' ansible-playbook /data/playbooks/dbbackupuat.yml  --vault-password-file /data/playbooks/ansibleadminpass.yml '
+            }
+		 }
+          stage("Start the backup of apjprod environment"){
+            steps{
+             sh ' ansible-playbook /data/playbooks/dbbackupprod.yml  --vault-password-file /data/playbooks/ansibleadminpass.yml'
+            }
+		 }
+          stage (" Start the backup of drl"){
+            steps{
+                sh 'ansible-playbook /data/playbooks/dbbackupdrllive.yml  --vault-password-file /data/playbooks/ansibleadminpass.yml '
+            }
+         }
+          stage (" Start the backup of the legato"){
+            steps{
+                sh 'ansible-playbook /data/playbooks/dbbackuplegatolive.yml   --vault-password-file /data/playbooks/ansibleadminpass.yml'
+            }
+		  }
+         }
+        }    
+         stage(" Start the backup of APJ Cloud"){
+            steps{
+                sh 'ansible-playbook /data/playbooks/dbbackupapjlive.yml  --vault-password-file /data/playbooks/ansibleadminpass.yml'
+            }
+         }
+	} 
+            post{
+                always{
+                    echo "========always========"
+                }
+                success{
+                    echo "========A executed successfully========"
+                    mail bcc: 'devops@entomo.co', body: 'Today backup is sucessfull JENKINS', cc: 'nishanth.kumar@entomo.co', from: 'noreply@entomo.co', replyTo: 'devops@entomo.co', subject: 'Today backup is Done', to: 'devops@entomo.co'
+                }
+                failure{
+                    echo "========A execution failed========"
+                    mail bcc: 'devops@entomo.co', body: 'Today backup is failure JENKINS', cc: 'nishanth.kumar@entomo.co', from: 'noreply@entomo.co', replyTo: 'devops@entomo.co', subject: 'Today backup is failure', to: 'devops@entomo.co'
+                }
+            }
+    }

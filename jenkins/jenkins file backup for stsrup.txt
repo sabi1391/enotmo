@@ -1,0 +1,39 @@
+pipeline{
+   agent any;
+    stages {
+      stage("start the Non prod RDS Server "){
+        steps {
+                sh 'aws rds start-db-instance --db-instance-identifier mum-nonprod --profile jenkinsmum --region ap-south-1 '
+            }
+      }
+         stage(" start the EC2 instance ") {
+            steps{
+                sh 'python3  /data/python/releaseskylark_start.py'
+            }
+         }
+         stage("Run the services"){
+            steps{
+                sh ' ansible-playbook /data/playbooks/releaseskylarknew.yml'
+            }
+         }
+        }
+ post{
+        always{
+            echo "========always========"
+            cleanWs()
+        }
+        success{
+                        echo "========pipeline execution success========"
+        
+        office365ConnectorSend message: "Build for QA-ENV Startup", status:"Success", webhookUrl:'https://kpisoft.webhook.office.com/webhookb2/29edff85-564f-41c3-b80c-f1637422af4f@4e7fc100-a3ca-4172-9394-29dbfec53920/IncomingWebhook/44edaffe7abf4a6ea6f81092c4f14a5a/dda03655-24cf-431a-aac4-39268acfc3ea',factDefinitions: [[name: "Environment",template:"${JOB_NAME}"],[name: "Build details",template: "${env.BUILDVERSION}"]], color: "00d000"
+        mail bcc: 'devops@entomo.co', body: 'Build for QA-ENV Startup via JENKINS is success', cc: 'devops@entom.co', from: 'noreply@kpisoft.com', replyTo: 'nishanth.kumar@entomo.co', subject: 'Job Trigger for QA-ENV Startup Got success', to: 'devops@entomo.co'
+         
+        }
+        failure{
+            echo "========pipeline execution failed========"
+
+        office365ConnectorSend message: "Build for QA-ENV_startup ", status:"Failed", webhookUrl:'https://kpisoft.webhook.office.com/webhookb2/29edff85-564f-41c3-b80c-f1637422af4f@4e7fc100-a3ca-4172-9394-29dbfec53920/IncomingWebhook/44edaffe7abf4a6ea6f81092c4f14a5a/dda03655-24cf-431a-aac4-39268acfc3ea',factDefinitions: [[name: "Environment",template:"${JOB_NAME}"],[name: "Build details",template: "${env.BUILDVERSION}"]], color: "00d000"
+        mail bcc: 'devops@entomo.co', body: 'Build for QA-ENV Startup via JENKINS is failure', cc: 'devops@entom.co', from: 'noreply@kpisoft.com', replyTo: 'nishanth.kumar@entomo.co', subject: 'Job Trigger for QA-ENV Startup Got Failed', to: 'devops@entomo.co'
+        }
+    }
+}

@@ -1,0 +1,40 @@
+pipeline{
+    parameters {
+           string(name: 'instance_id', defaultValue: '', description: 'enter the instance id')
+           string(name: 'region', defaultValue: '', description: 'enter the region')
+           choice(name: 'environmentname',choices: 'start\nstop',description: 'which environment you need to start or stop ??')
+           
+    }
+    agent any
+    
+    stages{
+        stage("instance start/stop "){
+            steps{
+                script {
+                if (params.environmentname == "start")               
+                sh "ansible-playbook /data/playbooks/startinstance.yml --extra-vars 'instance_id=${params.instance_id} region=${params.region}'"
+               else 
+                sh "ansible-playbook /data/playbooks/stopinstance.yml --extra-vars 'instance_id=${params.instance_id} region=${params.region}'"
+            }
+            }
+            }
+        }
+    
+    post{
+        always{
+            echo "========always========"
+            cleanWs()
+            
+        }
+        success{
+            echo  "========pipeline executed successfully ========"
+                  //office365ConnectorSend message: "Instance-${}  ", status:"Success ", webhookUrl:'https://kpisoft.webhook.office.com/webhookb2/ab36b85c-a9c0-4013-84be-5cedc77b7563@4e7fc100-a3ca-4172-9394-29dbfec53920/IncomingWebhook/2520a6169b5246af99eecc3374c279d5/dda03655-24cf-431a-aac4-39268acfc3ea',factDefinitions: [[name: "instance_id",template:"${params.environmentname}"],[name: "instance-${params.environment}"], color: "d00000"
+
+        }
+        failure{
+           echo "========pipeline executed successfully ========"
+                   //office365ConnectorSend message: "Instance-${}  ", status:"Success ", webhookUrl:'https://kpisoft.webhook.office.com/webhookb2/ab36b85c-a9c0-4013-84be-5cedc77b7563@4e7fc100-a3ca-4172-9394-29dbfec53920/IncomingWebhook/2520a6169b5246af99eecc3374c279d5/dda03655-24cf-431a-aac4-39268acfc3ea',factDefinitions: [[name: "Environment",template:"${params.environment}"],[name: "Build details",template: "${env.BUILDVERSION}"],[name: "UserExecuted", template: "${env.user1}"]], color: "d00000"
+
+        }
+    }
+}
