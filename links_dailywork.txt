@@ -1,0 +1,592 @@
+--------------------------------------------------
+redis cache
+live--
+
+apj: ssh -i carrerhub.pem centos@172.31.25.80 (4)
+drl: ssh -i carrerhub.pem centos@172.31.25.80  (11)
+show: ssh -i carrerhub.pem centos@172.31.25.80 (9)
+CAH: ssh -i carrerhub.pem centos@172.31.25.80 (1)
+
+jk live:  ssh -i jkprod\ \(3\).pem centos@172.27.23.45 (1)
+jk smmlive:  ssh -i jkprod\ \(3\).pem centos@172.27.23.45 (5)
+
+uat--
+apj mirror: ssh -i redis-cluster-qa.pem centos@172.31.19.173  (2)
+apjuat mirror: ssh -i redis-cluster-qa.pem centos@172.31.19.173 (4)
+
+
+----------------------------------------------------login to server 
+nonprod mongodb:
+ ssh -i mongodb-cluster-qa.pem centos@172.31.23.229
+
+
+prod mongodb:
+ssh -i carrerhub.pem centos@172.31.17.230
+
+ssh -i legato.pem centos@172.31.17.33
+mongo  -u adminUser --authenticationDatabase "admin" -p wfKeN7FVh9QKPPkR
+
+ssh -i jkprod\ \(3\).pem centos@172.27.47.121
+mongo  -u adminUser --authenticationDatabase "admin" -p V6Fvhc2LnJ5CpgMN
+
+mariadb:
+
+jkbackup:  
+             ssh -i jkbackup\ \(1\).pem centos@172.27.27.193
+mysql -hsmmlive.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uadmin  -pIw0xz1pnV9kVMmfrDldl
+
+MEA backup:
+ ssh -i uae_backupserver\ \(1\).pem centos@172.26.29.142
+
+apjftpserver:  ssh -i apjftpserver.pem centos@172.31.30.249
+
+mumbai:
+ ssh -i mumnonprod.pem centos@172.30.15.48
+
+----------------------------------------------------------------------------------------------
+sgp_prod_nginx_show_02 -- 172.31.22.81
+sgp_prod_nginx_apj_01 -- 172.31.30.146 
+sgp_prod_nginx_drl_03 -- 172.31.24.72
+sgp_prod_nginx_legato_04 -- 172.31.19.215
+jkt_prod_nginx_01 -- 172.27.20.156
+uae_prod_nginx_01 -- 172.26.19.129
+
+=============================================================RDS:
+Slno 	End Point	                                             Private IP
+1	jknonprod.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com	     172.27.19.160
+2	jkprod-bi.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com	     172.27.4.60       jkprodmongo:aDrTYdc2d1sh4LtL
+3	jkprod-etlrds.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com	 172.27.11.115
+4	jkprod-master.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com	 172.27.10.151
+5	smmlive.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com	     172.27.39.52
+
+
+============================================================ Swarm urls with credentials
+
+Sl no	JK Swarmpit  URL	                       Region                      username                         password
+1	https://swarmpitsg.entomo.co/	             Sg-nonprod                     kpisoftadmin                     8cCYct6d9CPyGsB
+2	http://172.31.30.145:888	                 Sg-prod                        Admin                            MFmb6Ee8HERzW7yE
+
+3	http://172.27.19.236:888/                     Jk-nonprod                     sabiha                           Test@123  
+4	https://jkswarmpit.entomo.co 	              Jk-prod                        Admin                            ahtei4Shiv7a
+
+5	http://172.30.13.19:888/	                  Mum-nonprod                    admin                             Passw0rd@54321
+   
+
+---------------------------------------------------------------------------------------------------------------------------------
+DRL: 172.31.24.72 (aws)
+
+ssh -i drlnginx.pem centos@172.31.24.72
+to check maintiance page : https://performance.mydrreddys.com/home/
+
+back to build details:  https://drreddys.kpisoft.com/home/#/signin
+
+swarm pit : ct
+
+ in docker build (backend) search with push and take that command.
+ example: Releaseskylarkskylark-7.0-22032022134021-900d89140f90bbb471f8abd520a99c43785d3a1f-drl_release_s2
+
+in ui build (frontend) go down take scp line and edit it as below:
+example: scp -r  kpisoft@ftp.kpisoft.com:/tmp/skylark-7.0-22032022134051-900d89140f90bbb471f8abd520a99c43785d3a1f-drl_release_s2-prod/* .
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+
+AWS SG Region, JK Region and Alicloud Indonesia
+
+
+Prod-Nginx1-172.31.30.146; MEA-172.16.0.166; JK-172.16.0.85
+APJ:
+
+APJ Live >>> /opt/SMM
+UI profile > prod
+Maintancepage path:  cd /opt/nginx/conf   ---->  apjprod-nginx-Mantainence.conf 
+ 
+ to check maintenance page in chrome:  https://cloud.kpisoft.com/home/
+ 
+check the maintenance page https://cloud.kpisoft.com/home/#/signin 
+ 
+ if its there ct goto swarmpit-->stack-->apjcareer-->edit with latest one as normal.
+ apj live clear cache:                          ssh -i carrerhub.pem centos@172.31.25.80
+ ---------------------------------------------------------------------------------------------------------------------------
+ JK
+ 
+  maintence page path: cd  /opt/nginx/conf  -----> 
+  
+  
+--------------------------------------------------------------------------------------------------------------------------
+
+Drill configure:
+
+cd /opt/apachedrill/bin
+./drillbit.sh start
+
+
+cd /opt/zookeeper/bin
+./zkServer.sh start
+
+cd /opt/presto
+./launche
+
+Drill connection issue:
+
+issue: in smmuat bi dmin designer module user not able to upload files , considerd it as a drill connection issue.
+login to application-->bi-admin-->data engine--> check ip by compring in aws instane drill nonprod ip and chnge it save.
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+increased size in jenkins file for achiever uat : sh "sed -i 's/--max_old_space_size=8192/--max_old_space_size=16384/g' package.json"
+
+senario: https://kpisoft.atlassian.net/browse/SUP-9087 :---request is to move build from live to achiever uat but build is getting failed due to size issue (confirmed by sagar)
+so we added  sh "sed -i 's/--max_old_space_size=8192/--max_old_space_size=16384/g' package.json" this line in configure jenkins file under ui build after if line.
+triggerd build agian its got successed.
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+cah :172.31.30.146
+
+cah.kpisoft.com
+
+
+
+1.Take backup of nginx configuration file.
+2.Copy maintances to the nginx configuration file.
+3.Take backup of UI static files.
+4.Copy static files from ftp server to the UI path.
+5.Take backup of backend build.
+6.Deploy backend build with new build.
+7.Run necessary queries given by dev team
+8.Clear the cache.
+9.Remove the maintance and replace with the nginx configuration file
+10.Reload the nginx
+
+------------------------------
+apjnonprod:
+mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L
+
+-------apjpreprod:
+
+mysql -hsgrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -uadmin -pPa62Um2P6atc
+
+
+----------apjprod:
+ mysql -uroot -pLtVhr8wJXHp2SvTC -h cthskylark.ctanibxecydf.ap-southeast-1.rds.amazonaws.com
+ 
+ 
+-------to connect ftp server with winscp
+ host:kpisoft
+ username: kpisoft
+ password: Passw0rd@54321
+ 
+-----------to move any files to ftp server:
+ scp -r backup.zip kpisoft@ftp.kpisoft.com:/tmp/
+ 
+ 
+-----to move or send any file to server:
+$ scp -i uae_nonprod.pem entomossl.zip centos@3.28.193.136://tmp/
+
+---------login to servers
+
+
+
+--to check schema list with size in mariadb:
+
+ SELECT table_schema AS "Database", SUM(data_length + index_length) / 1024 / 1024 /1024 AS "Size (GB)" FROM information_schema.TABLES GROUP BY table_schema ;
+--mongodb primary :
+mongo --host 172.31.29.155 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin"
+
+
+
+sync; echo 3 > /proc/sys/vm/drop_caches
+
+
+aws configure --profile entomo_oldaws
+
+access key: AKIA4NZTZR4M3XL6H67O
+secret key: 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
+aws s3 ls
+
+----------------mongodb apjive access :
+:
+
+mongo  -u adminUser --authenticationDatabase "admin" -p Xps6U9QnMrUSFWkF
+show dsb;
+use admin;
+for read?
+db.createUser({user: "chethanbl",pwd: "QAwsed23",roles:[{ role: "read", db: "TomorrowCareer" }]})
+for read and write?
+
+
+
+db.createUser({user: "sabiha" , pwd: "sabiha", roles:[{ role:  "readWrite", db: "apjuat_mongo"}]) 
+
+db.dropUser("username")
+db.dropUser("vinod")
+
+use admin
+db.revokeRolesFromUser("ritesh",[{ role: "readWrite", db: "TomorrowCareer" }])
+
+db.grantRolesToUser("sunil",[{ role: "read", db: "TomorrowCareer" }])
+db.revokeRolesFromUser("sunil",[{ role: "readWrite", db: "TomorrowCareer" }])
+
+
+--------------
+installing awscli 
+
+
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+cat ./aws/credetials
+
+---------------mongodb collection remove:
+
+show dbs;
+use dbname
+show collections;
+db.collectionname.drop()
+
+---------------clear cache for memory issue: 
+sync; echo 3 > /proc/sys/vm/drop_caches
+
+--------------------------------Take the backup of the mariadb and mongo and push to s3 bucket
+
+1. Take the backup by giving mysqldump and mongodump commands.
+mysqldump -uroot -pLtVhr8wJXHp2SvTC -h cthskylark.ctanibxecydf.ap-southeast-1.rds.amazonaws.com  careertomorrow > careertomorrow_08032023.sql
+mongodump  -u adminUser --authenticationDatabase "admin" -p Xps6U9QnMrUSFWkF --db careertomorrow --out /tmp/careertomorrow_08032023
+2.zip the files
+zip careertomorrow.sql.zip careertomorrow
+zip -r careertomorrow.zip careertomorrow
+note: if u get error command not found install zip in server (yum install zip)
+3.move this zip files to ftp server
+scp -r careertomorrow_08032023.sql.zip kpisoft@ftp.kpisoft.com:/tmp/
+4.login ftp server via winscp and drag it to local machine
+5. open aws s3 and there u can upload the files
+or
+using awscli u can move to s3 from ftp:
+aws s3 cp backupfoldername/ s3://s3path/ --recursive
+ex: aws s3 cp backup/ s3://apjbackup/oldbackup/ --recursive
+-------------------------------------------to create super admin credetails---------
+
+UPDATE EMP_DET_EMPLOYEE SET EMAIL='kpisoft.1@gmail.com',EDE_AT_USERNAME='kpisoft.1@gmail.com' WHERE EMAIL = 'skylark.sa@entomo.co'; 
+UPDATE  USR_DET_USER SET  USERNAME =  'kpisoft.1@gmail.com ' Where USERNAME = 'skylark.sa@entomo.co';
+UPDATE USR_DET_USER SET PASSWORD_NEW = '{bcrypt}$2a$12$leiMsCkwsMvFBuRJdaAKJ.eIFTfB4yYKdBF2zNA2oD8jVaXx4nqRW',
+PASSWORD_RESET_TOKEN = NULL, PASSWORD_RESET_TOKEN_EXPIRY = NULL
+WHERE USERNAME='kpisoft.1@gmail.com'; 
+
+note : check bcrypt in online before proceeding
+
+
+
+=============================================================
+proxy_pass will use in nginx for to connect backend which is same as ip
+
+
+
+
+-------------------------------------------------------------------executing script in mongodb:
+
+
+1.download the js and xlxs file to local
+2.copy(drag&drop) this 2 files to ftp server by logining through winscp
+hostname:ftp.kpisoft.com
+username:kpisoft
+password:
+3.login to the server to execute this script 
+(choce server by checking on swarmpit ct node because of given db is tommrowcareer)
+4.  ssh -i carrerhub.pem centos@172.31.20.42
+sudo su -
+scp -r kpisoft@ftp.kpisoft.com:/tmp/UploadCurrentRoleSkillsProductionMINDEF_new27032023.xlsx .
+scp -r kpisoft@ftp.kpisoft.com:/tmp/Update_current_role_skills_new_27032023.js .
+
+ls
+docker ps
+(it will show container id's)
+5. need to copy files to container (docker cp filename containerid:/usr/src/app)
+
+docker cp UploadCurrentRoleSkillsProductionMINDEF_new27032023.xlsx 4720c358d791:/usr/src/app
+docker cp Update_current_role_skills_new_27032023.js 4720c358d791:/usr/src/app
+
+6. enter into constainer as (docker exec -it containerid /bin/sh)
+docker exec -it 4720c358d791 /bin/sh
+ls
+vi Update_current_role_skills_new_27032023.js
+7.edit the in by copmaring with swarm stack file (legatoct service-->edit at above-->enviromant-->url) after pasting this in script remove db name from url before ?
+
+1)change url as enviromant
+2)dbname , user name , password
+
+url = "mongodb://careerhub:evBn12GBHkvuFAeD@ctmongo1.kpisoft.com:27017,ctmongo2.kpisoft.com:27017,ctmongo3.kpisoft.com:27017/TomorrowCareer?authSource=admin&w=1&replicaSet=kpict&readPreference
+let mongodb="TomorrowCareer"^M
+mongodb://careerhub:evBn12GBHkvuFAeD@ctmongo1.kpisoft.com:27017,ctmongo2.kpisoft.com:27017,ctmongo3.kpisoft.com:27017/?authSource=admin&w=1&replicaSet=kpict&readPreference=secondaryPreferred&retryWrites=true
+^M
+let FilePath = "UploadCurrentRoleSkillsProductionMINDEF_new09052023.xlsx";^M
+// mysql connection details^M
+let database="careerhub";^M
+let user= "careerhub";^M
+let password= "6MEMu5FpRg3a8ahA";^M
+let host ="cthskylark.ctanibxecydf.ap-southeast-1.rds.amazonaws.com";^M
+
+
+:wq!
+8. run the script node (filename.js)
+node Update_current_role_skills_new_27032023.js
+
+9 if u get error as mysql2 and node install by yum as below
+ npm install mysql2
+ 
+
+(Execute the attached script in CAH instance to updated the current role and skills
+SUP-11646
+URL: https://cah.ntuclearninghub.com/home/#/signin
+Database : TomorrowCareer)
+
+
+for ctuat:
+
+mongodb://adminUser:W2eJqp7ae2kG5RgW@mongodbsgqa2.kpisoft.com:27017/?authSource=admin
+
+npm install mysql2
+
+----------------------------------------------------------------------------------------
+
+mongo db queries:
+
+to give all db access:
+db.createUser({ user: "mongoadmin" , pwd: "mongoadmin", roles: ["userAdminAnyDatabase", "dbAdminAnyDatabase", "readWriteAnyDatabase"]})
+
+to give access for particular db:
+db.createUser({​user: "rakshith",pwd: "qNhOTYd",roles:[{​ role: "readWrite", db: "skylarkdevone_db" }​]}​)
+db.createUser({user: "ritesh.s" , pwd: "4bznlCI", roles: ["readWriteAnyDatabase"]})
+
+-------------------------Create a user in the  mariadb:
+
+CREATE USER 'test'@'%' IDENTIFIED BY 'welcome12345';
+GRANT Select ON legato_db.* TO 'raghavendra'@'%';
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON legato_db.UPLOAD_STATUS TO raghavendra;
+
+-------------------------Create a user in the Mongodb:
+Need to login to host : 
+show dbs;
+use admin;
+for read?
+db.createUser({user: "chethanbl",pwd: "QAwsed23",roles:[{ role: "read", db: "TomorrowCareer" }]})
+for read and write?
+db.createUser({​user: "rakshith",pwd: "qNhOTYd",roles:[{​ role: "readWrite", db: "skylarkdevone_db" }​]}​)
+
+
+To drop db in mongoserver: need to login to inside the hostserver 
+Show dbs;
+use dbname;
+db.dropDatabase()
+To drop db in mysql server:   need to login to inside the hostserver 
+Show dbs;
+drop database dbname;
+-----------------------------------maria queries
+show dbs;
+
+to list dbs with size
+ SELECT table_schema "DB Name", ROUND(SUM(data_length + index_length) / 1024 / 1024 / 1024, 1) "DB Size in GB" FROM information_schema.tables GROUP BY table_schema;
+ SELECT table_schema AS "Database", SUM(data_length + index_length) / 1024 / 1024 /1024 AS "Size (GB)" FROM information_schema.TABLES GROUP BY table_schema ;
+
+--------------------------urls:
+legato-
+https://legatointernal.entomo.co/home/#/signin
+new@lega.com
+Test@123
+
+avinash.s
+jghjkdbjed
+
+ALTER USER 'sabhia'@'%'
+IDENTIFIED BY 'Welcome@123'
+
+sabhia
+Welcome@123
+
+===============enable zabix in ec2-user:
+sudo su -
+[root@ip-172-30-1-141 ~]# cd /usr/local/sbin/
+[root@ip-172-30-1-141 sbin]# ./zabbix_agentd
+
+
+ cd /usr/local/sbin/
+  431  ls
+  432  cd /etc/zabbix/
+  433  ls
+   systemctl status zabbix-agent
+    systemctl start zabbix-agent
+
+======================================================installing zabbix in centos/ec2user:
+
+wget https://cdn.zabbix.com/zabbix/sources/stable/5.0/zabbix-5.0.8.tar.gz
+tar -xvf zabbix-5.0.8.tar.gz
+yum install pcre-devel gcc -y
+ls
+cd zabbix/
+./configure -enable-agent
+make install
+useradd zabbix
+vi /usr/local/etc/zabbix_agentd.conf  (add server ip as zabixx main priavte ip and hostanme as curentt instance name) 172.31.18.251
+:wq!
+systemctl zabbix_agent status
+netstat -tunlp | grep 10050 (to check with port is connected or not)
+cd /usr/local/sbin/
+./zabbix_agentd
+
+if any issue:
+ ps -ef grep | zabbix  (to chec zabbix is installed or not by process id )
+ 
+ go to zabbix dashbord --> configuration-->create host--> hostaname= instance name, templet= linux and icmp,  agent= instance private ip, group=region, --> add.
+ go to aws --> to perticular instnce--> security gruoups--> add rule , all trafics, main zabix private ip-->save.
+ 
+ 
+ 
+ 
+ ((((((((((((((or)))))))
+ 
+yum install epel-release -y
+
+yum install https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm -y
+
+yum install zabbix-agent zabbix-sender -y
+
+vi /etc/zabbix/zabbix_agentd.conf
+
+systemctl status zabbix-agent
+
+systemctl start zabbix-agent
+
+systemctl enable zabbix-agent
+ ===============================================================================================================================================================
+ password reset:  https://kpisoft.atlassian.net/browse/PS-7331
+ 
+ systemctl start zabbix-agent
+ systemctl enable zabbix-agent
+ 
+ =============================installing rabbitmq in centos:
+sudo su -
+cd /opt 
+ wget https://github.com/rabbitmq/erlang-rpm/releases/download/v24.0/erlang-24.0-1.el8.x86_64.rpm
+  280  wget https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.8.16/rabbitmq-server-3.8.16-1.el7.noarch.rpm
+  281  ls
+  282  rpm -Uvh rabbitmq-server-3.8.16-1.el7.noarch.rpm
+  283  ls
+  284  cd /lib/rabbitmq/
+  285  ls
+  286  cd lib/rabbitmq_server-3.8.16/sbin/
+  287  systemctl start rabbitmq-server.service
+  288  systemctl status rabbitmq-server.service
+  289  rabbitmq-plugins enable rabbitmq_management
+  290  systemctl status rabbitmq-server.service
+
+
+
+========================================================Login to AWS with access key
+
+
+>aws configure --profile bucketname
+AWS Access Key ID [None]: AKIAVNMASVXVEU7Q522L
+AWS Secret Access Key [None]: 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
+Default region name [None]:
+Default output format [None]
+
+----to upload files from local to s3 bucket using CMD:
+>aws s3 cp localpath s3destination --profile bucketname --region regionname
+ex: aws s3 cp D:\ats.txt s3://atsclient/ --profile atsclient --region me-central-1
+>aws s3 cp s3://atsclient/ats.txt . 
+
+aws s3 cp s3://atsclient/ats.txt . --profile atsclient --region me-central-1
+
+==================================================================delete .m2 folder in jenkins
+
+
+when got error in jenkins job as .m2 
+>go to jenkins server
+sudo su -
+cd 
+cd .m2
+cd repository
+delete particular folder or delete repository folder
+
+
+557439159
+8104
+
+==========================================================Installing and enabling ssm agent in centos and ec2user server:
+1) login to instance
+sudo su -
+cd /opt/
+sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_arm64/amazon-ssm-agent.rpm
+or
+sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
+systemctl status amazon-ssm-agent
+sudo systemctl enable amazon-ssm-agent
+sudo systemctl start amazon-ssm-agent
+
+2)navigate to aws 
+select instance
+|
+actions
+|
+securiy
+|
+modify IAM role
+|
+select ssm-ec2-instance
+|
+update IAM role
+
+=======================================================================================maigrating from mongo db to another mongo db (Database migration from CT mongo DB to EPMS mongo DB - release & release mirror)
+1)taking backup of  db
+mongodump --uri mongodb+srv://releaseskylark_user:4bADelfgwNNtxHRm@nonprodqa.lhmaa.mongodb.net/releaseskylark_mongo  --out  releaseskylark_mongo_19082023
+
+mongodump -u adminUser -p ASFRAFsdkfjsk  --authenticationDatabase "admin"  --db releaseskylarkmirror_ct  --out releaseskylarkmirror_ct_17082023
+mongodump -u adminUser -p ASFRAFsdkfjsk  --authenticationDatabase "admin"  --db releaseskylarkmirror  --out releaseskylarkmirror_17082023
+
+2) 
+
+========================================Restoring data/ files to back to mongo DB
+
+mongorestore -h ipofhost  --username adminUser --password W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db destination sourcefile --drop
+mongorestore --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db digitalqa_skylark  sourcefile
+
+note : only dson file we can restore as we stored data in bzon formate
+
+exmaples:
+mongorestore -h 172.31.23.229 --username adminUser --password W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db ctuat_careermodule collaborators.bson --drop
+mongorestore -h 172.31.23.229 --username adminUser --password W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db ctuat_careermodule resumes.bson --drop
+
+===============================================Nginix installation on amazonlinux
+sudo yum update -y
+sudo amazon-linux-extras install nginx1 -y
+sudo systemctl start nginx
+sudo systemctl enable nginx
+sudo systemctl status nginx
+
+------------------------------------------
+releaseskyalrk mongo login:
+mongosh mongodb+srv://releaseskylark_user:4bADelfgwNNtxHRm@nonprodqa.lhmaa.mongodb.net
+
+
+sh -x /opt/scripts/mongodbackup.sh >> /opt/scripts/logs/mongobackuplogs.log 2>&1
+sh -x ifelse.sh  >> ifelse.log 2>&1
+====================================================================================== Patching update in jkprod instance (https://kpisoft.atlassian.net/browse/SUP-13010)
+Taking the snapshots of all the patching instances.
+aws-->instance-->click on actions-->
+
+Install SSM agent and attach the IAM role SSM-EC2-Instances to enable communication between instance and SSM Manager.
+
+Create Patch group (PROD) and adding instances to the group.
+
+Create custom Patch baseline(Centos_Entomo_Patches) with Severity(Security and Bugfix) and Priority(Critical and Important) patches.
+
+Scheduling Scan and Install patches after business hours
+
+Verify the compliance report for the patched instances.
+
+Closely monitor the patched instances for one week. If it is successful
