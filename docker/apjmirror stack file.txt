@@ -1,0 +1,156 @@
+version: '3.3'
+services:
+  bi:
+    image: kpisoft/app-bundle:skylark-7.0-01062023094358-334a0e8c5c974c2c5a8d9b68ee523cbc54864f49-PS-7422
+    labels:
+      enabled: 'true'
+    environment:
+      ELASTIC_APM_APPLICATION_PACKAGES: com.kpisoft
+      ELASTIC_APM_ENVIRONMENT: apjmirror
+      ELASTIC_APM_LOG_LEVEL: WARN
+      ELASTIC_APM_SECRET_TOKEN: Mm2vkuYzpUpQEQAJiU
+      ELASTIC_APM_SERVER_URLS: https://63077c7ae3d14de69d1784e1192c4dbb.apm.ap-southeast-1.aws.cloud.es.io:443
+      ELASTIC_APM_SERVICE_NAME: bi
+      JAVA_OPTS: -Xss256k -Xms4642m -Xmx4642m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=7357
+      host: apjmirror.entomo.co
+      jasyptPassword: KNebMfNL7gjiTvHjb9/H+W9sS/6nbSNB
+      logstashHost: 172.30.9.222
+      logstashPort: '5516'
+      server.port: '2114'
+      spring.config.location: /tmp/application.properties
+      userHome: /home/app
+    ports:
+     - 2114:2114
+     - 7357:7357
+    volumes:
+     - /opt/skylark/apjmirror/bi:/home/app
+     - /opt/skylark/apjmirror/logs/bi.log:/tmp/bi.log
+    networks:
+     - default
+    configs:
+     -
+      source: apjmirror_bi_01062023
+      target: /tmp/application.properties
+    logging:
+      driver: json-file
+    deploy:
+      update_config:
+        delay: 20s
+        failure_action: rollback
+      placement:
+        constraints:
+         - node.role == worker
+         - node.labels.Name == skylarkdev
+      resources:
+        reservations:
+          cpus: '1.0'
+          memory: 4692M
+        limits:
+          cpus: '3.0'
+          memory: 4792M
+  epms:
+    image: kpisoft/app-bundle:skylark-7.0-01062023094358-334a0e8c5c974c2c5a8d9b68ee523cbc54864f49-PS-7422
+    labels:
+      enabled: 'true'
+    environment:
+      ELASTIC_APM_APPLICATION_PACKAGES: com.kpisoft
+      ELASTIC_APM_ENVIRONMENT: apjmirror
+      ELASTIC_APM_LOG_LEVEL: WARN
+      ELASTIC_APM_SECRET_TOKEN: Mm2vkuYzpUpQEQAJiU
+      ELASTIC_APM_SERVER_URLS: https://63077c7ae3d14de69d1784e1192c4dbb.apm.ap-southeast-1.aws.cloud.es.io:443
+      ELASTIC_APM_SERVICE_NAME: epms
+      JAVA_OPTS: -Xss256k -Xms3072m -Xmx3072m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=7358
+      'JDK_JAVA_OPTIONS ': -Duser.home=/home/app
+      host: apjmirror.entomo.co
+      jasyptPassword: KNebMfNL7gjiTvHjb9/H+W9sS/6nbSNB
+      logstashHost: 172.30.9.222
+      logstashPort: '5516'
+      server.port: '2115'
+      spring.config.location: /tmp/application.properties
+    ports:
+     - 2115:2115
+     - 7358:7358
+    volumes:
+     - /opt/skylark/apjmirror/epms:/home/app
+     - /opt/skylark/apjmirror/logs/app.log:/tmp/app.log
+    networks:
+     - default
+    configs:
+     -
+      source: apjmirror_epms_01062023
+      target: /tmp/application.properties
+    logging:
+      driver: json-file
+    deploy:
+      update_config:
+        delay: 20s
+        failure_action: rollback
+      placement:
+        constraints:
+         - node.role == worker
+         - node.labels.Name == skylarkdev
+      resources:
+        reservations:
+          cpus: '1.0'
+          memory: 3172M
+        limits:
+          cpus: '1.2'
+          memory: 3272M
+  epms_admin:
+    image: kpisoft/app-bundle:skylark-7.0-01062023094358-334a0e8c5c974c2c5a8d9b68ee523cbc54864f49-PS-7422
+    labels:
+      enabled: 'true'
+    environment:
+      ELASTIC_APM_APPLICATION_PACKAGES: com.kpisoft
+      ELASTIC_APM_ENVIRONMENT: apjmirror
+      ELASTIC_APM_LOG_LEVEL: WARN
+      ELASTIC_APM_SECRET_TOKEN: Mm2vkuYzpUpQEQAJiU
+      ELASTIC_APM_SERVER_URLS: https://63077c7ae3d14de69d1784e1192c4dbb.apm.ap-southeast-1.aws.cloud.es.io:443
+      ELASTIC_APM_SERVICE_NAME: epms_admin
+      JAVA_OPTS: -Xss256k -Xms5592m -Xmx5592m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=7356
+      JDK_JAVA_OPTIONS: -Duser.home=/home/app
+      host: apjmirror.entomo.co
+      jasyptPassword: KNebMfNL7gjiTvHjb9/H+W9sS/6nbSNB
+      logstashHost: 172.30.9.222
+      logstashPort: '5516'
+      server.port: '2116'
+      spring.config.location: /tmp/application.properties
+    ports:
+     - 2116:2116
+     - 7356:7356
+    volumes:
+     - /opt/skylark/apjmirror/epmsadmin:/home/app
+     - /opt/skylark/apjmirror/logs/admin.log:/tmp/admin.log
+    networks:
+     - default
+    configs:
+     -
+      source: apjmirror_epmsadmin_01062023
+      target: /tmp/application.properties
+    logging:
+      driver: json-file
+    deploy:
+      update_config:
+        delay: 20s
+        failure_action: rollback
+      placement:
+        constraints:
+         - node.role == worker
+         - node.labels.Name == skylarkdev
+      resources:
+        reservations:
+          cpus: '1.0'
+          memory: 5692M
+        limits:
+          cpus: '1.2'
+          memory: 5792M
+networks:
+  default:
+    driver: overlay
+configs:
+  apjmirror_bi_01062023:
+    external: true
+  apjmirror_epms_01062023:
+    external: true
+  apjmirror_epmsadmin_01062023:
+    external: true

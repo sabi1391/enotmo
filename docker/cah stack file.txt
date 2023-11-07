@@ -1,0 +1,315 @@
+version: '3.3'
+services:
+  bi:
+    image: kpisoft/app-bundle:Releaseskylarkskylark-7.0-12012023094914-8a1a920186a7a2b2cd75ac9772ba49b58bcc1caa-release
+    labels:
+      enabled: 'true'
+    environment:
+      ELASTIC_APM_APPLICATION_PACKAGES: com.kpisoft
+      ELASTIC_APM_ENVIRONMENT: cah
+      ELASTIC_APM_LOG_LEVEL: WARN
+      ELASTIC_APM_SECRET_TOKEN: y17yUXjD3LqsiPXpue
+      ELASTIC_APM_SERVER_URLS: https://04bec3c4c9a840f2af0706205c0d55ed.apm.ap-southeast-1.aws.cloud.es.io:443
+      ELASTIC_APM_SERVICE_NAME: bi
+      ENABLE_APM: 'true'
+      JAVA_OPTS: -Xss256k -Xms4792m -Xmx4792m  -Dlog4j2.formatMsgNoLookups=true
+      MicrosoftAppId: 26c20ff5-3af8-4db4-8a12-5e7c10fdede8
+      MicrosoftAppPassword: .l27Q~EMaUgpu6VJUolDPnnPh3o2BTBCwOcO0
+      TeamsTabAppId: 4cdc28ba-829e-46af-bdd8-1dc8a9c8c05e
+      TeamsTabEntityId: aa4fba17-ca06-4452-a274-21ef3791ded4
+      host: cah.ntuc.org.sg
+      jasyptPassword: KNebMfNL7gjiTvHjb9/H+W9sS/6nbSNB
+      logstashHost: 172.31.24.215
+      logstashPort: '5514'
+      mq.teams.queue.name: $${mq.prefix}-teams
+      serverPort: '7113'
+      userHome: /home/app
+    ports:
+     - 7113:7113
+    volumes:
+     - /opt/skylark/bi:/home/app
+     - /opt/skylark/logs/bi.log:/tmp/app.log
+    networks:
+     - default
+    configs:
+     -
+      source: cah_bi_16012023
+      target: /tmp/application.properties
+    logging:
+      driver: json-file
+    deploy:
+      update_config:
+        parallelism: 2
+        delay: 20s
+        failure_action: rollback
+      restart_policy:
+        condition: on-failure
+        max_attempts: 20
+      placement:
+        constraints:
+         - node.role == worker
+         - node.labels.Name == careerhub
+      resources:
+        reservations:
+          cpus: '3.0'
+          memory: 5120M
+        limits:
+          cpus: '3.0'
+          memory: 5120M
+  bi_insight:
+    image: kpisoft/app-bundle:Releaseskylarkskylark-7.0-12012023094914-8a1a920186a7a2b2cd75ac9772ba49b58bcc1caa-release
+    labels:
+      enabled: 'true'
+    environment:
+      ELASTIC_APM_APPLICATION_PACKAGES: com.kpisoft
+      ELASTIC_APM_ENVIRONMENT: cah
+      ELASTIC_APM_LOG_LEVEL: WARN
+      ELASTIC_APM_SECRET_TOKEN: y17yUXjD3LqsiPXpue
+      ELASTIC_APM_SERVER_URLS: https://04bec3c4c9a840f2af0706205c0d55ed.apm.ap-southeast-1.aws.cloud.es.io:443
+      ELASTIC_APM_SERVICE_NAME: bi_insight
+      ENABLE_APM: 'true'
+      JAVA_OPTS: -Xss256k -Xms5972m -Xmx5972m -Dlog4j2.formatMsgNoLookups=true
+      MicrosoftAppId: 26c20ff5-3af8-4db4-8a12-5e7c10fdede8
+      MicrosoftAppPassword: .l27Q~EMaUgpu6VJUolDPnnPh3o2BTBCwOcO0
+      TeamsTabAppId: 4cdc28ba-829e-46af-bdd8-1dc8a9c8c05e
+      TeamsTabEntityId: aa4fba17-ca06-4452-a274-21ef3791ded4
+      host: cah.ntuc.org.sg
+      jasyptPassword: KNebMfNL7gjiTvHjb9/H+W9sS/6nbSNB
+      logstashHost: 172.31.24.215
+      logstashPort: '5514'
+      mq.teams.queue.name: $${mq.prefix}-teams
+      serverPort: '7115'
+      userHome: /home/app
+    ports:
+     - 7115:7115
+    volumes:
+     - /opt/skylark/bi:/home/app
+     - /opt/skylark/logs/bi.log:/tmp/app.log
+    networks:
+     - default
+    configs:
+     -
+      source: cah_bi_insights_16012023
+      target: /tmp/application.properties
+    logging:
+      driver: json-file
+    deploy:
+      update_config:
+        delay: 20s
+        failure_action: rollback
+      restart_policy:
+        condition: on-failure
+        max_attempts: 10
+      placement:
+        constraints:
+         - node.role == worker
+         - node.labels.Name == careerhub
+      resources:
+        reservations:
+          cpus: '1.0'
+          memory: 5972M
+        limits:
+          cpus: '1.0'
+          memory: 5972M
+  ct:
+    image: kpisoft/maprecruit:skylark-7.0-12012023140946-8a1a920186a7a2b2cd75ac9772ba49b58bcc1caa-release-APJ
+    environment:
+      DB_CON_STR: mongodb://careerhub:evBn12GBHkvuFAeD@ctmongo1.kpisoft.com:27017,ctmongo2.kpisoft.com:27017,ctmongo3.kpisoft.com:27017/TomorrowCareer?authSource=admin&w=1&replicaSet=kpict&readPreference=secondaryPreferred&retryWrites=true
+    ports:
+     - 2020:2020
+    networks:
+     - default
+    logging:
+      driver: json-file
+    deploy:
+      placement:
+        constraints:
+         - node.labels.Name == careerhub
+      resources:
+        reservations:
+          cpus: '1.5'
+          memory: 2048M
+        limits:
+          cpus: '1.5'
+          memory: 2048M
+  epms:
+    image: kpisoft/app-bundle:Releaseskylarkskylark-7.0-12012023094914-8a1a920186a7a2b2cd75ac9772ba49b58bcc1caa-release
+    labels:
+      enabled: 'true'
+    environment:
+      ELASTIC_APM_APPLICATION_PACKAGES: com.kpisoft
+      ELASTIC_APM_ENVIRONMENT: cah
+      ELASTIC_APM_LOG_LEVEL: WARN
+      ELASTIC_APM_SECRET_TOKEN: y17yUXjD3LqsiPXpue
+      ELASTIC_APM_SERVER_URLS: https://04bec3c4c9a840f2af0706205c0d55ed.apm.ap-southeast-1.aws.cloud.es.io:443
+      ELASTIC_APM_SERVICE_NAME: epms
+      ENABLE_APM: 'true'
+      JAVA_OPTS: -Xss256k -Xms3072m -Xmx3072m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=7358   -Dlog4j2.formatMsgNoLookups=true
+      MicrosoftAppId: 26c20ff5-3af8-4db4-8a12-5e7c10fdede8
+      MicrosoftAppPassword: .l27Q~EMaUgpu6VJUolDPnnPh3o2BTBCwOcO0
+      TeamsTabAppId: 4cdc28ba-829e-46af-bdd8-1dc8a9c8c05e
+      TeamsTabEntityId: aa4fba17-ca06-4452-a274-21ef3791ded4
+      host: cah.ntuclearninghub.com
+      jasyptPassword: KNebMfNL7gjiTvHjb9/H+W9sS/6nbSNB
+      logstashHost: 172.31.24.215
+      logstashPort: '5514'
+      mq.teams.queue.name: $${mq.prefix}-teams
+      serverPort: '7111'
+      userHome: /home/app
+    ports:
+     - 7111:7111
+     - 7358:7358
+    volumes:
+     - /opt/skylark/epms:/home/app/
+     - /opt/skylark/logs/app.log:/tmp/app.log
+    networks:
+     - default
+    configs:
+     -
+      source: cah_epms_16012023
+      target: /tmp/application.properties
+    logging:
+      driver: json-file
+    deploy:
+      update_config:
+        parallelism: 5
+        delay: 20s
+        failure_action: rollback
+      restart_policy:
+        condition: on-failure
+        max_attempts: 20
+      placement:
+        constraints:
+         - node.role == worker
+         - node.labels.Name == careerhub
+      resources:
+        reservations:
+          cpus: '1.0'
+          memory: 3072M
+        limits:
+          cpus: '1.0'
+          memory: 3072M
+  epms_admin:
+    image: kpisoft/app-bundle:Releaseskylarkskylark-7.0-12012023094914-8a1a920186a7a2b2cd75ac9772ba49b58bcc1caa-release
+    labels:
+      enabled: 'true'
+    environment:
+      ELASTIC_APM_APPLICATION_PACKAGES: com.kpisoft
+      ELASTIC_APM_ENVIRONMENT: cah
+      ELASTIC_APM_LOG_LEVEL: WARN
+      ELASTIC_APM_SECRET_TOKEN: y17yUXjD3LqsiPXpue
+      ELASTIC_APM_SERVER_URLS: https://04bec3c4c9a840f2af0706205c0d55ed.apm.ap-southeast-1.aws.cloud.es.io:443
+      ELASTIC_APM_SERVICE_NAME: epms_admin
+      ENABLE_APM: 'true'
+      JAVA_OPTS: -Xss256k -Xms5972m -Xmx5972m  -Dlog4j2.formatMsgNoLookups=true
+      MicrosoftAppId: 26c20ff5-3af8-4db4-8a12-5e7c10fdede8
+      MicrosoftAppPassword: .l27Q~EMaUgpu6VJUolDPnnPh3o2BTBCwOcO0
+      TeamsTabAppId: 4cdc28ba-829e-46af-bdd8-1dc8a9c8c05e
+      TeamsTabEntityId: aa4fba17-ca06-4452-a274-21ef3791ded4
+      host: cah.ntuc.org.sg
+      jasyptPassword: KNebMfNL7gjiTvHjb9/H+W9sS/6nbSNB
+      logstashHost: 172.31.24.215
+      logstashPort: '5514'
+      mq.teams.queue.name: $${mq.prefix}-teams
+      serverPort: '7112'
+      userHome: /home/app
+    ports:
+     - 7112:7112
+    volumes:
+     - /opt/skylark/epmsadmin:/home/app/
+     - /opt/skylark/logs/admin.log:/tmp/app.log
+    networks:
+     - default
+    configs:
+     -
+      source: cah_epms_admin_16012023
+      target: /tmp/application.properties
+    logging:
+      driver: json-file
+    deploy:
+      update_config:
+        delay: 20s
+        failure_action: rollback
+      restart_policy:
+        condition: on-failure
+        max_attempts: 10
+      placement:
+        constraints:
+         - node.role == worker
+         - node.labels.Name == careerhub
+      resources:
+        reservations:
+          cpus: '1.0'
+          memory: 5972M
+        limits:
+          cpus: '1.0'
+          memory: 5972M
+  epms_admin_bulk:
+    image: kpisoft/app-bundle:Releaseskylarkskylark-7.0-12012023094914-8a1a920186a7a2b2cd75ac9772ba49b58bcc1caa-release
+    labels:
+      enabled: 'true'
+    environment:
+      ELASTIC_APM_APPLICATION_PACKAGES: com.kpisoft
+      ELASTIC_APM_ENVIRONMENT: cah
+      ELASTIC_APM_LOG_LEVEL: WARN
+      ELASTIC_APM_SECRET_TOKEN: y17yUXjD3LqsiPXpue
+      ELASTIC_APM_SERVER_URLS: https://04bec3c4c9a840f2af0706205c0d55ed.apm.ap-southeast-1.aws.cloud.es.io:443
+      ELASTIC_APM_SERVICE_NAME: epms_admin_bulk
+      ENABLE_APM: 'true'
+      JAVA_OPTS: -Xss256k -Xms5972m -Xmx5972m  -Dlog4j2.formatMsgNoLookups=true
+      MicrosoftAppId: 26c20ff5-3af8-4db4-8a12-5e7c10fdede8
+      MicrosoftAppPassword: .l27Q~EMaUgpu6VJUolDPnnPh3o2BTBCwOcO0
+      TeamsTabAppId: 4cdc28ba-829e-46af-bdd8-1dc8a9c8c05e
+      TeamsTabEntityId: aa4fba17-ca06-4452-a274-21ef3791ded4
+      host: cah.ntuc.org.sg
+      jasyptPassword: KNebMfNL7gjiTvHjb9/H+W9sS/6nbSNB
+      logstashHost: 172.31.24.215
+      logstashPort: '5514'
+      mq.teams.queue.name: $${mq.prefix}-teams
+      serverPort: '7114'
+      userHome: /home/app
+    ports:
+     - 7114:7114
+    volumes:
+     - /opt/skylark/epmsadmin:/home/app/
+     - /opt/skylark/logs/admin.log:/tmp/app.log
+    networks:
+     - default
+    configs:
+     -
+      source: cah_epms_adminbulk_16042023
+      target: /tmp/application.properties
+    logging:
+      driver: json-file
+    deploy:
+      update_config:
+        delay: 20s
+        failure_action: rollback
+      restart_policy:
+        condition: on-failure
+        max_attempts: 10
+      placement:
+        constraints:
+         - node.role == worker
+         - node.labels.Name == careerhub
+      resources:
+        reservations:
+          cpus: '1.0'
+          memory: 5972M
+        limits:
+          cpus: '1.0'
+          memory: 5972M
+networks:
+  default:
+    driver: overlay
+configs:
+  cah_bi_16012023:
+    external: true
+  cah_bi_insights_16012023:
+    external: true
+  cah_epms_16012023:
+    external: true
+  cah_epms_admin_16012023:
+    external: true
+  cah_epms_adminbulk_16042023:
+    external: true

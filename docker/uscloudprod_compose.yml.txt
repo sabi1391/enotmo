@@ -1,0 +1,134 @@
+version: '3.3'
+services:
+  cloudus_prod_bi:
+    image: kpisoft/app-bundle:Releaseskylarkskylark-7.0-25022022084620-b3bf70910b49f5fe72758cbe1587637b476d8599-release
+    extra_hosts:
+     - usdrill1.kpisoft.com:172.31.11.16
+     - usdrill2.kpisoft.com:172.31.38.160
+     - usdrill3.kpisoft.com:172.31.43.15
+    environment:
+      JAVA_OPTS: -Xss256k -Xms4792m -Xmx4792m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=7357
+      host: uscloud.kpisoft.com
+      jasyptPassword: KNebMfNL7gjiTvHjb9/H+W9sS/6nbSNB
+      logstashHost: 172.31.20.65
+      logstashPort: '5514'
+      serverPort: '8113'
+      userHome: /root
+    ports:
+     - 7357:7357
+     - 8113:8113
+    volumes:
+     - /opt/skylark/bi:/root
+     - /opt/skylark/logs/bi.log:/tmp/app.log
+     - /opt/s3mount/:/opt/s3mount/
+    networks:
+     - default
+    configs:
+     -
+      source: uscloudprod_bi_26022022
+      target: /tmp/application.properties
+    logging:
+      driver: json-file
+    deploy:
+      update_config:
+        delay: 20s
+        failure_action: rollback
+      placement:
+        constraints:
+         - node.role == worker
+         - node.labels.Name == usprod
+      resources:
+        reservations:
+          cpus: '1.0'
+          memory: 4892M
+        limits:
+          cpus: '1.2'
+          memory: 4992M
+  cloudus_prod_epms:
+    image: kpisoft/app-bundle:Releaseskylarkskylark-7.0-25022022084620-b3bf70910b49f5fe72758cbe1587637b476d8599-release
+    environment:
+      JAVA_OPTS: -Xss256k -Xms3072m -Xmx3072m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=7358
+      host: uscloud.kpisoft.com
+      jasyptPassword: KNebMfNL7gjiTvHjb9/H+W9sS/6nbSNB
+      logstashHost: 172.31.20.65
+      logstashPort: '5514'
+      serverPort: '8111'
+      userHome: /home/app
+    ports:
+     - 7358:7358
+     - 8111:8111
+    volumes:
+     - /opt/skylark/epms:/home/app/
+     - /opt/skylark/logs/app.log:/tmp/app.log
+    networks:
+     - default
+    configs:
+     -
+      source: uscloudprod_epms_26022022
+      target: /tmp/application.properties
+    logging:
+      driver: json-file
+    deploy:
+      update_config:
+        delay: 20s
+        failure_action: rollback
+      placement:
+        constraints:
+         - node.role == worker
+         - node.labels.Name == usprod
+      resources:
+        reservations:
+          cpus: '1.0'
+          memory: 3172M
+        limits:
+          cpus: '1.2'
+          memory: 3272M
+  cloudus_prod_epms_admin:
+    image: kpisoft/app-bundle:Releaseskylarkskylark-7.0-25022022084620-b3bf70910b49f5fe72758cbe1587637b476d8599-release
+    environment:
+      JAVA_OPTS: -Xss256k -Xms5972m -Xmx5972m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=7356
+      host: uscloud.kpisoft.com
+      jasyptPassword: KNebMfNL7gjiTvHjb9/H+W9sS/6nbSNB
+      logstashHost: 172.31.20.65
+      logstashPort: '5514'
+      serverPort: '8112'
+      userHome: /home/app
+    ports:
+     - 7356:7356
+     - 8112:8112
+    volumes:
+     - /opt/skylark/epmsadmin:/home/app/
+     - /opt/skylark/logs/admin.log:/tmp/app.log
+    networks:
+     - default
+    configs:
+     -
+      source: uscloudprod_epmsadmin_26022022
+      target: /tmp/application.properties
+    logging:
+      driver: json-file
+    deploy:
+      update_config:
+        delay: 20s
+        failure_action: rollback
+      placement:
+        constraints:
+         - node.role == worker
+         - node.labels.Name == usprod
+      resources:
+        reservations:
+          cpus: '1.0'
+          memory: 6044M
+        limits:
+          cpus: '1.2'
+          memory: 6144M
+networks:
+  default:
+    driver: overlay
+configs:
+  uscloudprod_bi_26022022:
+    external: true
+  uscloudprod_epms_26022022:
+    external: true
+  uscloudprod_epmsadmin_26022022:
+    external: true

@@ -1,0 +1,167 @@
+#
+# Copyright(\u00c2\u00a9) 2013 - 2017, Developed by KPISOFT PTE. LTD. All rights reserved.
+#
+# The intellectual and technical concepts contained herein may be covered
+# by patents, patents in process, and are protected by trade secret or
+# copyright law. Any unauthorized use of this code without prior approval
+# from KPISOFT PTE. LTD. is prohibited.
+#
+#Profiles
+spring.profiles.active=timerDebug,s3,production,bulkUpload,supportTicket,taskManagementJob,checkInCronJob,announcementCronJOb,paypalLive,bi,bi_admin,rabbit_mq_queue,bi_rabbit_processor,rabbit_mq_listener,reportScheduler
+freshdesk.supportEmail=support@kpisoft.com
+#Hibernate properties
+#------------------------------------------------
+spring.jpa.hibernate.ddl-auto=update
+
+spring.datasource.url=jdbc:mysql://cthskylark.ctanibxecydf.ap-southeast-1.rds.amazonaws.com:3306/careertomorrow?useUnicode=true&characterEncoding=UTF-8&charSet=utf8mb4&useSSL=false&serverTimezone=UTC
+
+spring.datasource.username=careertomorrow_appuser
+spring.datasource.password=cdSERgh6V123RwsAW
+spring.jpa.properties.hibernate.generate_statistics=false
+#Mongo db
+
+spring.data.mongodb.uri=mongodb://careertomorrow:mfJJu123ZY4XjLtL@ctmongo1.kpisoft.com:27017,ctmongo2.kpisoft.com:27017,ctmongo3.kpisoft.com:27017/careertomorrow?replicaSet=kpict&readPreference=secondaryPreferred&retryWrites=true
+
+#Redis
+#------------------------------------------------
+spring.redis.sentinel.master=mymaster
+spring.redis.sentinel.nodes=172.31.25.80:26379,172.31.31.229:26379,172.31.27.162:26379
+spring.redis.port=6379
+spring.redis.database=8
+spring.redis.pool.max-active=100
+spring.redis.jedis.pool.max-active=75
+spring.redis.timeout=10000
+
+app.fileServerPath=https://s3-ap-southeast-1.amazonaws.com/careertomorrow/appdata
+app.isMobileRegistryEnabled=true
+app.mobileRegistryUrl=https://skylarkmr.kpisoft.com/skylarkdevmr/v1/users
+app.useInternalMobileRegistry=false
+
+app.baseDomain=ct.kpisoft.com
+
+AnnouncementScheduleCronExpression=0 * * * * *
+
+#Bi application properties
+insight.serviceTimeInterval=0 0/5 * * * *
+insight.serviceEnable=true
+insight.autoSchedule=false
+insight.batchProcessMode=true
+userCache.forceClearCache=true
+userCache.isCacheMaster=true
+
+####SES
+
+mail.smtp.host=email-smtp.us-west-2.amazonaws.com
+mail.smtp.port=587
+mail.smtp.username=AKIA4NZTZR4MSD43LZ7J
+mail.smtp.password=BEF/CSR1Vyo1pXJD/EH7JWZ9HzCW2Dlc0qtdKCMEs9cY
+mail.smtp.protocol=smtp
+mail.from=noreply@kpisoft.com
+
+
+# Amazon s3 properties
+#------------------------------------------------
+aws.s3BucketName=careertomorrow
+aws.s3AccessKey=AKIAVNMASVXVLPSK6MHO
+aws.s3SecretKey=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
+aws.s3BasePath=appdata
+aws.s3Region=ap-southeast-1
+
+
+logstash.server.host=172.30.0.207
+insight.processor=true
+
+app.pushNotification=true
+
+highChart.export.server.url=http://172.31.17.231:7801
+
+jest.uris=http://172.31.22.173/
+jest.app.index=careertomorrow-my-app-*
+jest.error.index=careertomorrow-my-error-*
+
+
+mail.disabled=false
+
+reportScheduleCronExpression=0 0/1 * * * *
+taskManagementCronExpression=0 */15 * ? * *
+
+#bulkUploadCronExpression=0 0/10 * * * *
+bulkUploadCronExpression=0 */10 * * * *
+
+bi.table.upload.cron=0 */2 * * * *
+bi.drill.files.basePath=/tmp/s3mount
+
+logstash.server.port=${logstashPort}
+
+template.export.server.url=http://172.31.17.231:7802
+cache.biAdminOps=true
+checkInsScheduleCronExpression=0 0 0 * * *
+AnnouncementScheduleCronExpression=0 * * * * *
+
+app.paymentClientId = AebR_ugvpPQpLuuSE90_KRuPABGeYCFMtFXRidcR0yjOEgzPR6hnR1PrAxiYKJfQksZrme3P-ThLD4h5
+app.paymentClientSecret = EAs-UCIauxqZefvrc5t0z1gSoH2GQAbo9RhhQj4-mL-5yMNPatE-uUOz-fzu04r57PJqow6OOzhVSWtw
+
+spring.rabbitmq.addresses=apjrabbitmquser:4qV3LBgVspRDhy@172.31.23.29
+#mq.prefix=career_hub
+mq.prefix=career_tomorrow
+# EPMS and Core Queues
+mq.event.queue.name=${mq.prefix}-event
+mq.event.exchange.name=${mq.prefix}-event-exchange
+mq.mail.queue.name=${mq.prefix}-mail
+mq.mail.exchange.name=${mq.prefix}-mail-exchange
+mq.announcement.queue.name=${mq.prefix}-announcement
+mq.announcement.exchange.name=${mq.prefix}-announcement-exchange
+mq.includeEmployee.queue.name=${mq.prefix}-includeEmployee
+mq.includeEmployee.exchange.name=${mq.prefix}-includeEmployee-exchange
+mq.reviewTrigger.queue.name=${mq.prefix}-reviewTrigger
+mq.reviewTrigger.exchange.name=${mq.prefix}-reviewTrigger-exchange
+mq.cobImage.queue.name=${mq.prefix}-cobImage
+mq.cobImage.exchange.name=${mq.prefix}-cobImage-exchange
+mq.cache.queue.name=${mq.prefix}-cache
+mq.cache.exchange.name=${mq.prefix}-cache-exchange
+mq.competencySupervisor.queue.name=${mq.prefix}-competencySupervisor
+mq.competencySupervisor.exchange.name=${mq.prefix}-competencySupervisor-exchange
+
+# BI Queues
+# BI Cache Queue
+mq.biCache.queue=${mq.prefix}-biCacheQ
+mq.biCache.qExchange=${mq.prefix}-biCacheQ-exchange
+
+ 
+
+# BI Page Snapsht Queue
+mq.pageSnapshot.queue=${mq.prefix}-pageSnapshotQ
+mq.pageSnapshot.qExchange=${mq.prefix}-pageSnapshotQ-exchange
+
+ 
+
+# BI Insight & Email Queues
+mq.insight.processor.queue=${mq.prefix}-insightProcessorQ
+mq.insight.processor.qExchange=${mq.prefix}-insightProcessorQ-exchange
+mq.insight.notification.queue=${mq.prefix}-insightNotificationQ
+mq.insight.notification.qExchange=${mq.prefix}-insightNotificationQ-exchange
+mq.insight.ruleEval.queue=${mq.prefix}-insightRuleEvalQ
+mq.insight.ruleEval.qExchange=${mq.prefix}-insightRuleEvalQ-exchange
+mq.insight.batch.queue=${mq.prefix}-insightBatchQ
+mq.insight.batch.qExchange=${mq.prefix}-insightBatchQ-exchange
+mq.insight.group.queue=${mq.prefix}-insightGroupQ
+mq.insight.group.qExchange=${mq.prefix}-insightGroupQ-exchange
+mq.insight.content.queue=${mq.prefix}-insightContentQ
+mq.insight.content.qExchange=${mq.prefix}-insightContentQ-exchange
+mq.insight.email.queue=${mq.prefix}-insightEmailQ
+mq.insight.email.qExchange=${mq.prefix}-insightEmailQ-exchange
+mq.teams.queue.name=${mq.prefix}-teams 
+mq.teams.insightQueue.name=${mq.prefix}-teams-insight
+mq.teams.insight.qExchange=${mq.prefix}-teams-insight-exchang
+ 
+
+# BI Contest Queues
+mq.contest.queue=${mq.prefix}-contestQ
+mq.contest.qExchange=${mq.prefix}-contestQ-exchange
+mq.game.contest.queue=${mq.prefix}-gameContestQ
+mq.game.contest.qExchange=${mq.prefix}-gameContestQ-exchange
+
+# Joye.ai properties
+joye.url=https://jy-test-fd-emaud3eab6f2e8ce.z01.azurefd.net
+joye.platformKey=entomo
+joye.subscriptionKey=799d4ac2b74e4fb799af1da6bcea2d0a

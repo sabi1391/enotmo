@@ -1,0 +1,267 @@
+#
+# Copyright(\u00c2\u00a9) 2013 - 2017, Developed by KPISOFT PTE. LTD. All rights reserved.
+#
+# The intellectual and technical concepts contained herein may be covered
+# by patents, patents in process, and are protected by trade secret or
+# copyright law. Any unauthorized use of this code without prior approval
+# from KPISOFT PTE. LTD. is prohibited.
+#
+#Profiles
+spring.profiles.active=timerDebug,s3,production,supportTicket,rabbit_mq_queue
+freshdesk.supportEmail=support@kpisoft.com
+#Hibernate properties
+#------------------------------------------------
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.database-platform=org.hibernate.dialect.MySQL57InnoDBDialect
+spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+spring.jpa.hibernate.use-new-id-generator-mappings=false
+# Data base properties
+#------------------------------------------------
+spring.datasource.platform=mysql
+#below property edited for support utf8mb4 
+spring.datasource.url=jdbc:mysql://skylarkusa.cwh3lervjiai.us-east-2.rds.amazonaws.com:3306/usuat?useUnicode=true&characterEncoding=utf-8&charSet=utf8mb4&useSSL=false&serverTimezone=UTC
+#useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&useSSL=false&character_set_server=utf8mb4
+spring.datasource.username=cloudusuat
+spring.datasource.password=L5CVMq2QMZ3E9tMp
+spring.datasource.hikari.driver-class-name=org.mariadb.jdbc.Driver
+spring.datasource.test-on-borrow=true
+spring.datasource.validation-query=SELECT 1
+
+
+spring.datasource.hikari.minimumIdle=5
+spring.datasource.hikari.maximumPoolSize=50
+
+spring.datasource.hikari.connectionTimeout=30000
+spring.datasource.hikari.idleTimeout=600000
+spring.datasource.hikari.maxLifetime=1800000
+#spring.datasource.hikari.maximumPoolSize=50
+
+
+#Mongo db
+#------------------------------------------------
+spring.data.mongodb.host=172.31.20.243
+spring.data.mongodb.port=27017
+spring.data.mongodb.database=usuat
+
+
+#Redis
+#------------------------------------------------
+spring.redis.host=172.31.31.197
+spring.redis.port=6379
+spring.redis.database=1
+spring.redis.pool.max-active=20
+
+
+#logger
+#------------------------------------------------
+logging.level.org.hibernate.SQL=ERROR
+logging.level.org.hibernate.type.descriptor.sql.BasicBinder=ERROR
+logging.level.org.hibernate.type.descriptor.sql=ERROR
+logging.level.org.springframework.security=ERROR
+logging.level.com.kpisoft=DEBUG
+
+#log filename
+logging.file=server.log
+
+#Application properties
+#------------------------------------------------
+login.path=/login
+token.secret=66+/nn68RpfIiiDowmft60oj9JdgjJ4KCxXpSwhntCdD346dwFSTGPdDkC9LhJYuqTa7vBA91IKLeOftBVG0+g==
+token.expirationInSeconds=3600
+app.fileServerPath=https://s3-us-east-2.amazonaws.com/usuat/appdata
+app.isMobileRegistryEnabled=false
+app.mobileRegistryUrl=https://skylarkmr.kpisoft.com/skylarkdevmr/v1/users
+app.uiPath=/home
+app.appPath=/epms
+app.baseDomain=usuat.entomo.co
+app.SSOPath=${app.uiPath}/#/sso
+app.protocol=https
+app.oauthRedirectUri=${app.protocol}://${app.baseDomain}${app.appPath}/noAuth/ssoRedirect
+
+#Production this should be removed
+server.servlet.context-path=/epms
+
+#Application name
+spring.application.name=epms
+
+#Bi application properties
+
+insight.processor=false
+insight.serviceTimeInterval=0 0/5 * * * *
+insight.serviceEnable=false
+insight.autoSchedule=false
+cache.forceClearCache=false
+cache.isCacheMaster=false
+
+#JSON properties
+#-------------------------------------
+spring.jackson.time-zone=${user.timezone}
+
+# Email settings
+mail.smtp.host=smtp.mailtrap.io
+mail.smtp.port=2525
+mail.smtp.username=21cc9d363007bb
+mail.smtp.password=547fc5e1fe28fc
+mail.smtp.protocol=smtp
+mail.from=robert.ruiz@kpisoft.com
+
+# Email setting for mailcatcher 
+#mail.smtp.host=172.30.0.55
+#mail.smtp.port=1025
+#mail.smtp.username=
+#mail.smtp.password=
+#mail.smtp.protocol=smtp
+#mail.from=praseeb@kpisoft.com
+
+# Amazon s3 properties
+#------------------------------------------------
+aws.s3BucketName=usuat
+aws.s3AccessKey=AKIAVNMASVXVNLWUITHX
+aws.s3SecretKey=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
+aws.s3BasePath=appdata
+aws.s3Region=us-east-2
+
+
+#Route 53
+#------------------------------------------------
+awsRoute53.route53AccessKeyId=AKIAIP6GCFGJTOZSEORA
+awsRoute53.route53SecureKey=DTnAcwndGgzqgpLD30vDQbCdyhXAh9qGpAEjPQda
+awsRoute53.route53HostedZoneId=cignauat
+awsRoute53.route53Region=ap-southeast-1
+awsRoute53.applicationBaseHostName=epms.kpisoft.com
+awsRoute53.applicationIP=192.168.1.1
+
+# This below properties for sftp server
+#------------------------------------------------
+sftp.serverHostName=skylarkdev.kpisoft.com:22
+sftp.username=epms
+sftp.password=
+sftp.basePath=/home/epms/uploadTest
+sftp.privateKeyFilepath=target/test-classes/test.pub
+
+#Fire base
+firebase.url=https://fcm.googleapis.com/fcm/send
+
+logstash.server.host=172.31.2.224
+spring.session.store-type=redis
+
+#BI
+bi.analysis.corepoolsize=50
+bi.analysis.maxpoolsize=1000
+#this is to disable drill connection life time. Now its defaults to 30 mins.
+bi.analysis.drill.max.lifetime=1800000
+#man
+management.port=8796
+
+# Spring file upload limit
+spring.servlet.multipart.max-file-size=40MB
+spring.servlet.multipart.max-request-size=50MB
+
+spring.mvc.async.request-timeout=1200000
+
+spring.jpa.properties.hibernate.event.merge.entity_copy_observer=allow
+
+mail.disabled=false
+reportScheduleCronExpression=0 0/1 * * * *
+
+app.pushNotification=true
+
+bi.dw.enableDefaultWidgets=true
+bi.dw.defaultWidgetsFilePath=/data/skylark/deploy/cct_qa.csv
+
+#bulk upload property crontab
+bulkUploadCronExpression=0 0/1 * * * *
+
+taskManagementCronExpression=0 */15 * ? * *
+# HighChart Export 
+
+highChart.export.server.url=http://172.31.15.179:7801
+
+template.export.server.url=http://172.31.15.179:7802
+
+jest.uris=http://172.31.2.224:9200
+jest.app.index=usuat-app-*
+jest.error.index=usuat-error-*
+# Drill file storage path
+bi.drill.files.basePath=/opt/s3mount/
+
+
+keycloak.realm=demo
+keycloak.auth-server-url=http://172.30.0.55:8180/auth
+keycloak.ssl-required=external
+keycloak.resource=vanilla
+keycloak.public-client=true
+keycloak.principal-attribute=preferred_username
+
+logstash.server.port=5514
+
+insight.batchProcessMode=false
+checkInsScheduleCronExpression=0 0 0 * * *
+AnnouncementScheduleCronExpression=0 * * * * *
+app.logoImgPlayStore=https://digital.cigna.com/static/digital-cigna-com/img/google-play-badge.svg
+app.logoImgAppStore=https://digital.cigna.com/static/digital-cigna-com/img/apple-app-store-badge.svg
+ntucMembership.url=
+
+ntucMembership.username=
+
+ntucMembership.password=
+
+paypal.clientId=
+
+paypal.clientSecret=
+refreshToken.expirationInSeconds=7776000
+
+otp.expirationInSeconds=360
+otp.length=6
+
+
+spring.rabbitmq.addresses=rabbitmqusuat:XbucPhS2zKz78B@172.31.38.12
+mq.prefix=usuat
+# EPMS and Core Queues
+mq.event.queue.name=${mq.prefix}-event
+mq.event.exchange.name=${mq.prefix}-event-exchange
+mq.mail.queue.name=${mq.prefix}-mail
+mq.mail.exchange.name=${mq.prefix}-mail-exchange
+mq.announcement.queue.name=${mq.prefix}-announcement
+mq.announcement.exchange.name=${mq.prefix}-announcement-exchange
+mq.includeEmployee.queue.name=${mq.prefix}-includeEmployee
+mq.includeEmployee.exchange.name=${mq.prefix}-includeEmployee-exchange
+mq.reviewTrigger.queue.name=${mq.prefix}-reviewTrigger
+mq.reviewTrigger.exchange.name=${mq.prefix}-reviewTrigger-exchange
+mq.cobImage.queue.name=${mq.prefix}-cobImage
+mq.cobImage.exchange.name=${mq.prefix}-cobImage-exchange
+mq.cache.queue.name=${mq.prefix}-cache
+mq.cache.exchange.name=${mq.prefix}-cache-exchange
+mq.competencySupervisor.queue.name=${mq.prefix}-competencySupervisor
+mq.competencySupervisor.exchange.name=${mq.prefix}-competencySupervisor-exchange
+
+# BI Queues
+# BI Cache Queue
+mq.biCache.queue=${mq.prefix}-biCacheQ
+mq.biCache.qExchange=${mq.prefix}-biCacheQ-exchange
+
+# BI Page Snapsht Queue
+mq.pageSnapshot.queue=${mq.prefix}-pageSnapshotQ
+mq.pageSnapshot.qExchange=${mq.prefix}-pageSnapshotQ-exchange
+
+# BI Insight & Email Queues
+mq.insight.processor.queue=${mq.prefix}-insightProcessorQ
+mq.insight.processor.qExchange=${mq.prefix}-insightProcessorQ-exchange
+mq.insight.notification.queue=${mq.prefix}-insightNotificationQ
+mq.insight.notification.qExchange=${mq.prefix}-insightNotificationQ-exchange
+mq.insight.ruleEval.queue=${mq.prefix}-insightRuleEvalQ
+mq.insight.ruleEval.qExchange=${mq.prefix}-insightRuleEvalQ-exchange
+mq.insight.batch.queue=${mq.prefix}-insightBatchQ
+mq.insight.batch.qExchange=${mq.prefix}-insightBatchQ-exchange
+mq.insight.group.queue=${mq.prefix}-insightGroupQ
+mq.insight.group.qExchange=${mq.prefix}-insightGroupQ-exchange
+mq.insight.content.queue=${mq.prefix}-insightContentQ
+mq.insight.content.qExchange=${mq.prefix}-insightContentQ-exchange
+mq.insight.email.queue=${mq.prefix}-insightEmailQ
+mq.insight.email.qExchange=${mq.prefix}-insightEmailQ-exchange
+
+ 
+
+# BI Contest Queues
+mq.contest.queue=${mq.prefix}-contestQ
+mq.contest.qExchange=${mq.prefix}-contestQ-exchange

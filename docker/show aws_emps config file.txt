@@ -1,0 +1,271 @@
+#
+# Copyright(\u00c2\u00a9) 2013 - 2017, Developed by KPISOFT PTE. LTD. All rights reserved.
+#
+# The intellectual and technical concepts contained herein may be covered
+# by patents, patents in process, and are protected by trade secret or
+# copyright law. Any unauthorized use of this code without prior approval
+# from KPISOFT PTE. LTD. is prohibited.
+#
+#Profiles
+spring.profiles.active=timerDebug,s3,production,supportTicket,custom_Login,trace,rabbit_mq_queue
+freshdesk.supportEmail=support@kpisoft.com
+
+
+#Hibernate properties
+#------------------------------------------------
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.database-platform=org.hibernate.dialect.MySQL57InnoDBDialect
+spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+spring.jpa.hibernate.use-new-id-generator-mappings=false
+
+# Data base properties
+#------------------------------------------------
+spring.datasource.platform=mysql
+
+spring.datasource.url=jdbc:mysql://cthskylark.ctanibxecydf.ap-southeast-1.rds.amazonaws.com:3306/skylark_demo?useUnicode=true&characterEncoding=UTF-8&charSet=utf8mb4&useSSL=false&serverTimezone=UTC
+spring.datasource.username=skylarkpocuser
+spring.datasource.password=W5FXFph3H24xdmnv
+spring.datasource.hikari.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.test-on-borrow=true
+spring.datasource.validation-query=SELECT 1
+spring.datasource.hikari.minimumIdle=5
+spring.datasource.hikari.maximumPoolSize=2000
+
+
+#Mongo db
+#------------------------------------------------
+spring.data.mongodb.uri=mongodb://show:mfJJ123u123ZY4XjLtL@ctmongo1.kpisoft.com:27017,ctmongo2.kpisoft.com:27017,ctmongo3.kpisoft.com:27017/show?replicaSet=kpict&readPreference=secondaryPreferred&retryWrites=true
+
+#Redis
+#------------------------------------------------
+spring.redis.sentinel.master=mymaster
+spring.redis.sentinel.nodes=172.31.25.80:26379,172.31.31.229:26379,172.31.27.162:26379
+spring.redis.port=6379
+spring.redis.database=9
+spring.redis.pool.max-active=100
+spring.redis.jedis.pool.max-active=75
+spring.redis.timeout=10000
+
+#logger
+#------------------------------------------------
+logging.level.org.hibernate.SQL=ERROR
+logging.level.org.hibernate.type.descriptor.sql.BasicBinder=ERROR
+logging.level.org.hibernate.type.descriptor.sql=ERROR
+logging.level.org.springframework.security=ERROR
+logging.level.com.kpisoft=INFO
+logging.level.org.springframework.data.neo4j=ERROR
+logging.level.org.springframework.data.neo4j.support.query=ERROR
+
+#log filename
+logging.file=server.log
+
+#Application properties
+#------------------------------------------------
+login.path=/login
+token.secret=66+/nn68RpfIiiDowmft60oj9JdgjJ4KCxXpSwhntCdD346dwFSTGPdDkC9LhJYuqTa7vBA91IKLeOftBVG0+g==
+app.fileServerPath=https://s3-ap-southeast-1.amazonaws.com/showdemo/appdata
+app.isMobileRegistryEnabled=true
+app.mobileRegistryUrl=https://skylarkmr.kpisoft.com/mobile-registry/v1/users
+#app.useInternalMobileRegistry=false
+app.uiPath=/home
+app.appPath=/epms
+app.baseDomain=show.kpisoft.com
+app.SSOPath=${app.uiPath}/#/sso
+app.protocol=https
+app.oauthRedirectUri=${app.protocol}://${app.baseDomain}${app.appPath}/noAuth/ssoRedirect
+#Production this should be removed
+#server.context-path=/epms
+server.servlet.context-path=/epms
+#Application name
+spring.application.name=epms
+
+#Bi application properties
+#------------------------------------------
+insight.serviceTimeInterval=2 * * * * *
+insight.serviceEnable=false
+#userCache.forceClearCache=true
+#cache.forceClearCache=true
+#userCache.isCacheMaster=true
+#cache.isCacheMaster=true
+
+#JSON properties
+#-------------------------------------
+spring.jackson.time-zone=${user.timezone}
+
+# Email settings
+mail.smtp.host=smtp.mailtrap.io
+mail.smtp.port=2525
+mail.smtp.username=e1215aacdde715
+#pmail.smtp.username=
+#pmail.smtp.password=088c998dfc90f7
+mail.smtp.password=a2ed1333e219af
+mail.smtp.protocol=smtp
+mail.from=noreply@kpisoft.com
+mail.disabled=false
+# Amazon s3 properties
+#------------------------------------------------
+aws.s3BucketName=showdemo
+aws.s3AccessKey=AKIAVNMASVXVHXG3KGPQ
+aws.s3SecretKey=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
+aws.s3BasePath=appdata
+aws.s3Region=ap-southeast-1
+#Route 53
+#------------------------------------------------
+awsRoute53.route53AccessKeyId=AKIAIP6GCFGJTOZSEORA
+awsRoute53.route53SecureKey=DTnAcwndGgzqgpLD30vDQbCdyhXAh9qGpAEjPQda
+awsRoute53.route53HostedZoneId=test
+awsRoute53.route53Region=ap-southeast-1
+awsRoute53.applicationBaseHostName=epms.kpisoft.com
+awsRoute53.applicationIP=192.168.1.1
+
+# This below properties for sftp server
+#------------------------------------------------
+sftp.serverHostName=skylarkdev.kpisoft.com:22
+sftp.username=epms
+sftp.password=
+sftp.basePath=/home/epms/uploadTest
+sftp.privateKeyFilepath=target/test-classes/test.pub
+
+#Fire base
+firebase.url=https://fcm.googleapis.com/fcm/send
+
+#Eureka properties
+#------------------------------------------------
+#eureka.client.healthcheck.enabled=true
+#eureka.client.serviceUrl.defaultZone=http://${eureka.host:localhost}:8761/eureka
+#ribbon.eureka.enabled=true
+#application.version=@project.version@
+logstash.server.host=172.30.0.162
+spring.session.store-type=redis
+#HealthCheck&ShutdownPort
+management.context-path=/manage
+management.address=0.0.0.0
+management.security.enabled=false
+management.port=8296
+endpoints.enabled=false
+endpoints.info.enabled=true
+endpoints.shutdown.enabled=true
+
+#BI-Property
+bi.analysis.corepoolsize=50
+bi.analysis.maxpoolsize=1000
+# Spring file upload limit
+spring.servlet.multipart.max-file-size=41943040
+spring.servlet.multipart.max-request-size=52428800
+spring.mvc.async.request-timeout=1200000
+
+##new
+spring.jpa.properties.hibernate.event.merge.entity_copy_observer=allow
+logging.file=/tmp/app.log
+app.pushNotification=true
+reportScheduleCronExpression=0 */10 * ? * *
+bi.enableDefaultWidgets=false
+bi.defaultWidgetsFilePath=
+
+bi.analysis.drill.max.lifetime=0
+
+jest.uris=http://172.31.22.173:9200/,http://172.31.16.234:9200/,http://172.31.18.33:9200/
+jest.app.index=show-my-app*
+jest.error.index=show-my-error*
+
+
+highChart.export.server.url=http://172.31.5.198:7801
+
+keycloak.realm=demo
+keycloak.auth-server-url=http://localhost:8180/auth
+keycloak.ssl-required=external
+keycloak.resource=vanilla
+keycloak.public-client=true
+keycloak.principal-attribute=preferred_username
+logstash.server.port=${logstashPort}
+checkInsScheduleCronExpression=-
+taskManagementCronExpression=-
+app.logoImgPlayStore=<img src='https://digital.cigna.com/static/digital-cigna-com/img/google-play-badge.svg' height='55' width='175'/>
+
+app.logoImgAppStore=<img src='https://digital.cigna.com/static/digital-cigna-com/img/apple-app-store-badge.svg' height='55' width='175'/>
+
+ntucMembership.url=
+
+ntucMembership.username=
+
+ntucMembership.password=
+
+paypal.clientId=
+
+paypal.clientSecret=
+token.expirationInSeconds=3600
+refreshToken.expirationInSeconds=7776000
+
+
+spring.rabbitmq.addresses=apjrabbitmquser:4qV3LBgVspRDhy@172.31.23.29
+mq.prefix=Show
+# EPMS and Core Queues
+mq.event.queue.name=${mq.prefix}-event
+mq.event.exchange.name=${mq.prefix}-event-exchange
+mq.mail.queue.name=${mq.prefix}-mail
+mq.mail.exchange.name=${mq.prefix}-mail-exchange
+mq.announcement.queue.name=${mq.prefix}-announcement
+mq.announcement.exchange.name=${mq.prefix}-announcement-exchange
+mq.includeEmployee.queue.name=${mq.prefix}-includeEmployee
+mq.includeEmployee.exchange.name=${mq.prefix}-includeEmployee-exchange
+mq.reviewTrigger.queue.name=${mq.prefix}-reviewTrigger
+mq.reviewTrigger.exchange.name=${mq.prefix}-reviewTrigger-exchange
+mq.cobImage.queue.name=${mq.prefix}-cobImage
+mq.cobImage.exchange.name=${mq.prefix}-cobImage-exchange
+mq.cache.queue.name=${mq.prefix}-cache
+mq.cache.exchange.name=${mq.prefix}-cache-exchange
+mq.competencySupervisor.queue.name=${mq.prefix}-competencySupervisor
+mq.competencySupervisor.exchange.name=${mq.prefix}-competencySupervisor-exchange
+mq.teams.queue.name=${mq.prefix}-teams
+mq.biCache.queue.name=${mq.prefix}-biCacheQ
+mq.biCache.exchange.name=${mq.prefix}-biCacheQ-exchange
+mq.teams.insightQueue.name=${mq.prefix}-teams-insight
+mq.teams.insight.qExchange=${mq.prefix}-teams-insight-exchange
+
+# BI Queues
+# BI Cache Queue
+mq.biCache.queue=${mq.prefix}-biCacheQ
+mq.biCache.qExchange=${mq.prefix}-biCacheQ-exchange
+
+ 
+
+# BI Page Snapsht Queue
+mq.pageSnapshot.queue=${mq.prefix}-pageSnapshotQ
+mq.pageSnapshot.qExchange=${mq.prefix}-pageSnapshotQ-exchange
+
+ 
+
+# BI Insight & Email Queues
+mq.insight.processor.queue=${mq.prefix}-insightProcessorQ
+mq.insight.processor.qExchange=${mq.prefix}-insightProcessorQ-exchange
+mq.insight.notification.queue=${mq.prefix}-insightNotificationQ
+mq.insight.notification.qExchange=${mq.prefix}-insightNotificationQ-exchange
+mq.insight.ruleEval.queue=${mq.prefix}-insightRuleEvalQ
+mq.insight.ruleEval.qExchange=${mq.prefix}-insightRuleEvalQ-exchange
+mq.insight.batch.queue=${mq.prefix}-insightBatchQ
+mq.insight.batch.qExchange=${mq.prefix}-insightBatchQ-exchange
+mq.insight.group.queue=${mq.prefix}-insightGroupQ
+mq.insight.group.qExchange=${mq.prefix}-insightGroupQ-exchange
+mq.insight.content.queue=${mq.prefix}-insightContentQ
+mq.insight.content.qExchange=${mq.prefix}-insightContentQ-exchange
+mq.insight.email.queue=${mq.prefix}-insightEmailQ
+mq.insight.email.qExchange=${mq.prefix}-insightEmailQ-exchange
+
+ 
+
+# BI Contest Queues
+mq.contest.queue=${mq.prefix}-contestQ
+mq.contest.qExchange=${mq.prefix}-contestQ-exchange
+mq.game.contest.queue=${mq.prefix}-gameContestQ
+mq.game.contest.qExchange=${mq.prefix}-gameContestQ-exchange
+
+MicrosoftAppId=26c20ff5-3af8-4db4-8a12-5e7c10fdede8
+MicrosoftAppPassword=.l27Q~EMaUgpu6VJUolDPnnPh3o2BTBCwOcO0
+TeamsTabAppId=4cdc28ba-829e-46af-bdd8-1dc8a9c8c05e
+TeamsTabEntityId=aa4fba17-ca06-4452-a274-21ef3791ded4
+mq.teams.queue.name=${mq.prefix}-teams
+
+# Joye.ai properties
+joye.url=https://jy-test-fd-emaud3eab6f2e8ce.z01.azurefd.net
+joye.platformKey=entomo
+joye.subscriptionKey=799d4ac2b74e4fb799af1da6bcea2d0a

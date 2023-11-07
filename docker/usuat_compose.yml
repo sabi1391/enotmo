@@ -1,0 +1,130 @@
+version: '3.3'
+services:
+  bi:
+    image: skylarkkpisoft/app-bundle:Releaseskylarkskylark-7.0-17012022105914-03c71c1459f1c8e5dbb18a412bf78f4b054ebaac-release
+    environment:
+      JAVA_OPTS: -Xss256k -Xms4792m -Xmx4792m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=6735
+      host: usuat.kpisoft.com
+      jasyptPassword: KNebMfNL7gjiTvHjb9/H+W9sS/6nbSNB
+      logstashHost: 172.31.2.224
+      logstashPort: '5514'
+      serverPort: '7203'
+      userHome: /home/app
+    ports:
+     - 6735:6735
+     - 7203:7203
+    volumes:
+     - /opt/skylark/bi:/home/app
+     - /opt/skylark/logs/bi.log:/tmp/app.log
+     - /opt/s3mount/:/opt/s3mount/
+    networks:
+     - default
+    configs:
+     -
+      source: usuat_bi_08122021
+      target: /tmp/application.properties
+    logging:
+      driver: json-file
+    deploy:
+      update_config:
+        delay: 20s
+        failure_action: rollback
+      placement:
+        constraints:
+         - node.role == worker
+         - node.labels.Name == usuat
+      resources:
+        reservations:
+          cpus: '1.0'
+          memory: 4792M
+        limits:
+          cpus: '1.0'
+          memory: 4792M
+  epms:
+    image: skylarkkpisoft/app-bundle:Releaseskylarkskylark-7.0-17012022105914-03c71c1459f1c8e5dbb18a412bf78f4b054ebaac-release
+    environment:
+      JAVA_OPTS: -Xss256k -Xms3072m -Xmx3072m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=6736
+      host: usuat.kpisoft.com
+      jasyptPassword: KNebMfNL7gjiTvHjb9/H+W9sS/6nbSNB
+      logstashHost: 172.31.2.224
+      logstashPort: '5514'
+      serverPort: '7201'
+      userHome: /home/app
+    ports:
+     - 6736:6736
+     - 7201:7201
+    volumes:
+     - /opt/skylark/epms:/home/app/
+     - /opt/skylark/logs/app.log:/tmp/app.log
+    networks:
+     - default
+    configs:
+     -
+      source: usuat_epms_08122021
+      target: /tmp/application.properties
+    logging:
+      driver: json-file
+    deploy:
+      update_config:
+        delay: 20s
+        failure_action: rollback
+      placement:
+        constraints:
+         - node.role == worker
+         - node.labels.Name == usuat
+      resources:
+        reservations:
+          cpus: '1.0'
+          memory: 3072M
+        limits:
+          cpus: '1.0'
+          memory: 3072M
+  epms_admin:
+    image: skylarkkpisoft/app-bundle:Releaseskylarkskylark-7.0-17012022105914-03c71c1459f1c8e5dbb18a412bf78f4b054ebaac-release
+    environment:
+      JAVA_OPTS: -Xss256k -Xms5972m -Xmx5972m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=6737
+      host: usuat.kpisoft.com
+      jasyptPassword: KNebMfNL7gjiTvHjb9/H+W9sS/6nbSNB
+      logstashHost: 172.31.2.224
+      logstashPort: '5514'
+      serverPort: '7202'
+      userHome: /home/app
+    ports:
+     - 6737:6737
+     - 7202:7202
+    volumes:
+     - /opt/skylark/epmsadmin:/home/app/
+     - /opt/skylark/logs/admin.log:/tmp/app.log
+    networks:
+     - default
+    configs:
+     -
+      source: usuat_epms_admin_08122021
+      target: /tmp/application.properties
+    logging:
+      driver: json-file
+    deploy:
+      update_config:
+        delay: 20s
+        failure_action: rollback
+      placement:
+        constraints:
+         - node.role == worker
+         - node.labels.Name == usuat
+      resources:
+        reservations:
+          cpus: '1.0'
+          memory: 5972M
+        limits:
+          cpus: '1.0'
+          memory: 5792M
+networks:
+  default:
+    driver: overlay
+configs:
+  usuat_bi_08122021:
+    external: true
+  usuat_epms_08122021:
+    external: true
+  usuat_epms_admin_08122021:
+    external: true

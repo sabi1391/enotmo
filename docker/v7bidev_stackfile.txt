@@ -1,0 +1,135 @@
+version: '3.3'
+services:
+  bi:
+    image: kpisoft/app-bundle:v7bidevskylark-7.0-14092023045726-dfc86f3f29661cd99f1f46de097250885f0d4c56-sprint
+    labels:
+      enabled: 'true'
+    environment:
+      ELASTIC_APM_APPLICATION_PACKAGES: com.kpisoft
+      ELASTIC_APM_ENVIRONMENT: v7bidev
+      ELASTIC_APM_LOG_LEVEL: WARN
+      ELASTIC_APM_SECRET_TOKEN: Mm2vkuYzpUpQEQAJiU
+      ELASTIC_APM_SERVER_URLS: https://63077c7ae3d14de69d1784e1192c4dbb.apm.ap-southeast-1.aws.cloud.es.io:443
+      ELASTIC_APM_SERVICE_NAME: bi
+      JAVA_OPTS: -Xss256k -Xms4642m -Xmx4642m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:7537
+      host: v7bidev.entomo.co
+      jasyptPassword: KNebMfNL7gjiTvHjb9/H+W9sS/6nbSNB
+      logstashHost: 172.30.9.222
+      logstashPort: '6131'
+      server.port: '3082'
+      spring.config.location: classpath:/config/,file:/tmp/
+      userHome: /home/app
+    ports:
+     - 3082:3082
+     - 7537:7537
+    volumes:
+     - /opt/skylark/v7bidev/bi:/home/app
+     - /opt/skylark/v7bidev/logs/app.log:/app/bi.log
+    networks:
+     - default
+    configs:
+     -
+      source: v7bidev_bi_20072023
+      target: /tmp/application.properties
+    logging:
+      driver: json-file
+    deploy:
+      update_config:
+        delay: 20s
+        failure_action: rollback
+      placement:
+        constraints:
+         - node.role == worker
+         - node.labels.Name == v7bidev
+  bi_insight:
+    image: kpisoft/app-bundle:v7bidevskylark-7.0-14092023045726-dfc86f3f29661cd99f1f46de097250885f0d4c56-sprint
+    labels:
+      enabled: 'true'
+    environment:
+      ELASTIC_APM_APPLICATION_PACKAGES: com.kpisoft
+      ELASTIC_APM_ENVIRONMENT: v7bidev
+      ELASTIC_APM_LOG_LEVEL: WARN
+      ELASTIC_APM_SECRET_TOKEN: Mm2vkuYzpUpQEQAJiU
+      ELASTIC_APM_SERVER_URLS: https://63077c7ae3d14de69d1784e1192c4dbb.apm.ap-southeast-1.aws.cloud.es.io:443
+      ELASTIC_APM_SERVICE_NAME: epms_admin
+      JAVA_OPTS: -Xss256k -Xms5592m -Xmx5592m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:7539
+      host: v7bidev.entomo.co
+      jasyptPassword: KNebMfNL7gjiTvHjb9/H+W9sS/6nbSNB
+      logstashHost: 172.30.9.222
+      logstashPort: '6131'
+      server.port: '3084'
+      spring.config.location: classpath:/config/,file:/tmp/
+      userHome: /home/app
+    ports:
+     - 3084:3084
+     - 7539:7539
+    volumes:
+     - /opt/skylark/v7bidev/epmsadmin:/home/app
+     - /opt/skylark/v7bidev/logs/app.log:/app/bi.log
+    networks:
+     - default
+    configs:
+     -
+      source: v7bidev_biinsight_05072023_v2
+      target: /tmp/application.properties
+    logging:
+      driver: json-file
+    deploy:
+      update_config:
+        delay: 20s
+        failure_action: rollback
+      placement:
+        constraints:
+         - node.role == worker
+         - node.labels.Name == v7bidev
+  epms:
+    image: kpisoft/app-bundle:v7bidevskylark-7.0-14092023045726-dfc86f3f29661cd99f1f46de097250885f0d4c56-sprint
+    labels:
+      enabled: 'true'
+    environment:
+      ELASTIC_APM_APPLICATION_PACKAGES: com.kpisoft
+      ELASTIC_APM_ENVIRONMENT: v7bidev
+      ELASTIC_APM_LOG_LEVEL: WARN
+      ELASTIC_APM_SECRET_TOKEN: Mm2vkuYzpUpQEQAJiU
+      ELASTIC_APM_SERVER_URLS: https://63077c7ae3d14de69d1784e1192c4dbb.apm.ap-southeast-1.aws.cloud.es.io:443
+      ELASTIC_APM_SERVICE_NAME: epms
+      JAVA_OPTS: -Xss256k -Xms3072m -Xmx3072m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:7538
+      host: v7bidev.entomo.co
+      jasyptPassword: KNebMfNL7gjiTvHjb9/H+W9sS/6nbSNB
+      logstashHost: 172.30.9.222
+      logstashPort: '6131'
+      server.port: '3083'
+      spring.config.location: classpath:/config/,file:/tmp/
+      userHome: /home/app
+    ports:
+     - 3083:3083
+     - 7538:7538
+    volumes:
+     - /opt/skylark/v7bidev/epms:/home/app
+     - /opt/skylark/v7bidev/logs/app.log:/app/app.log
+    networks:
+     - default
+    configs:
+     -
+      source: v7bidev_epms_20072023
+      target: /tmp/application.properties
+    logging:
+      driver: json-file
+    deploy:
+      update_config:
+        delay: 20s
+        failure_action: rollback
+      placement:
+        constraints:
+         - node.role == worker
+         - node.labels.Name == v7bidev
+networks:
+  default:
+    driver: overlay
+configs:
+  v7bidev_bi_20072023:
+    external: true
+  v7bidev_biinsight_05072023_v2:
+    external: true
+  v7bidev_epms_20072023:
+    external: true

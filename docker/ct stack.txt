@@ -1,0 +1,74 @@
+version: '3.3'
+services:
+  ct:
+    image: kpisoft/maprecruit:skylark-7.0-13012023154216-7c956d82f57596b22f14a0d0fc03d0aebc1681be-release-APJ
+    environment:
+      DB_CON_STR: mongodb://careertomorrow:mfJJu123ZY4XjLtL@ctmongo1.kpisoft.com:27017,ctmongo2.kpisoft.com:27017,ctmongo3.kpisoft.com:27017/TomorrowCareer_ct?authSource=admin&w=1&replicaSet=kpict&readPreference=secondaryPreferred&retryWrites=true
+    ports:
+     - 2021:2020
+    networks:
+     - default
+    logging:
+      driver: json-file
+    deploy:
+      placement:
+        constraints:
+         - node.labels.Name == ct-epms
+  epms:
+    image: kpisoft/app-bundle:Releaseskylarkskylark-7.0-13012023065106-7c956d82f57596b22f14a0d0fc03d0aebc1681be-release
+    labels:
+      enabled: 'true'
+    environment:
+      ELASTIC_APM_APPLICATION_PACKAGES: com.kpisoft
+      ELASTIC_APM_ENVIRONMENT: ct
+      ELASTIC_APM_LOG_LEVEL: WARN
+      ELASTIC_APM_SECRET_TOKEN: y17yUXjD3LqsiPXpue
+      ELASTIC_APM_SERVER_URLS: https://04bec3c4c9a840f2af0706205c0d55ed.apm.ap-southeast-1.aws.cloud.es.io:443
+      ELASTIC_APM_SERVICE_NAME: epms
+      ENABLE_APM: 'true'
+      JAVA_OPTS: -Xss256k -Xms2794m -Xmx2794m  -Dlog4j2.formatMsgNoLookups=true
+      MicrosoftAppId: 26c20ff5-3af8-4db4-8a12-5e7c10fdede8
+      MicrosoftAppPassword: .l27Q~EMaUgpu6VJUolDPnnPh3o2BTBCwOcO0
+      TeamsTabAppId: 4cdc28ba-829e-46af-bdd8-1dc8a9c8c05e
+      TeamsTabEntityId: aa4fba17-ca06-4452-a274-21ef3791ded4
+      host: ct.kpisoft.com
+      jasyptPassword: KNebMfNL7gjiTvHjb9/H+W9sS/6nbSNB
+      logstashHost: 172.31.24.215
+      logstashPort: '5531'
+      mq.teams.queue.name: $${mq.prefix}-teams
+      serverPort: '1112'
+      userHome: /home/app
+    ports:
+     - 1112:1112
+    volumes:
+     - /opt/skylark/epms:/home/app
+     - /opt/skylark/logs/app.log:/tmp/app.log
+    networks:
+     - default
+    configs:
+     -
+      source: careertomorrow_epms_130123_v1
+      target: /tmp/application.properties
+    logging:
+      driver: json-file
+    deploy:
+      update_config:
+        delay: 20s
+        failure_action: rollback
+      placement:
+        constraints:
+         - node.role == worker
+         - node.labels.Name == ct-epms
+      resources:
+        reservations:
+          cpus: '1.0'
+          memory: 3034M
+        limits:
+          cpus: '1.0'
+          memory: 3080M
+networks:
+  default:
+    driver: overlay
+configs:
+  careertomorrow_epms_130123_v1:
+    external: true
