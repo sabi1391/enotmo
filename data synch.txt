@@ -1,0 +1,669 @@
+mongodump --db cloudusprod --out /opt/usprod
+
+
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjmirror_db > apjmirror_db13122022
+mysqldump -hsgrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -uadmin -pPa62Um2P6atc apjpreprod_db > apjpreprod_db111122.sql
+mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjmirror_db < smm_live_20221213.sql
+
+zip -r drluat_11112022.sql.zip drluat_11112022.sql
+apjuat2_db
+
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjuat2_db > apjuat2_db22122022.sql
+26235
+smm_live_20221221.sql
+
+mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjuat2_db < smm_live_20221221.sql
+31799
+
+apjmirror_db
+
+mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L 
+
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjmirror_db > apjmirror_27122022.sql
+19476
+gunzip
+28134
+
+mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjmirror_db < smm_live_20221226.sql
+
+
+zip drluat_test_db27122022.sql.zip drluat_test_db27122022
+
+
+
+
+
+   458  mongodump -u adminUser --authenticationDatabase "admin" -p Xps6U9QnMrUSFWkF --db careerhub  --out /opt/careerhub_19072022
+mongodump --host 172.16.0.179 -u adminUser -p 'jBtw3xqFVzRctp5k' --authenticationDatabase admin --db manulife_mongo --collection MiddlewareEvent --out MiddlewareEvent
+mongodump --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db apjvapt_mongo  --out /opt/backup/apjvapt_mongo_27122022 
+ 
+ mongo --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin"  
+ 
+ 
+
+ 
+mongodump --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db apjvapt_mongo  --out /opt/backup/apjvapt_mongo_27122022
+mongodump --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db apjvapt_nodejs  --out /opt/backup/apjvapt_nodejs_27122022
+mongodump --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db careerhub_mirror  --out /opt/backup/careerhub_mirror_27122022 
+mongodump --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db cct  --out /opt/backup/cct_27122022 
+mongodump --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db digitalmirror_skylark  --out /opt/backup/digitalmirror_skylark_27122022 
+digitalqa_skylark
+mongodump --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db digitalqa_skylark  --out /opt/backup/digitalqa_skylark_27122022 
+mongodump --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db drluat_test_mongo  --out /opt/backup/drluat_test_mongo_27122022 
+mongodump --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db epms_dev_nodejs   --out /opt/backup/epms_dev_nodejs_27122022 
+mongodump --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db gradiantmongo    --out /opt/backup/gradiantmongo_27122022 
+mongodump --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db nightly_sdg    --out /opt/backup/nightly_sdg_27122022 
+mongodump --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db nightly_skylark    --out /opt/backup/nightly_skylark_27122022 
+mongodump --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db ntt_skylark_mongo    --out /opt/backup/ntt_skylark_mongo_27122022 
+mongodump --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db preprod_mongo    --out /opt/backup/preprod_mongo_27122022 
+mongodump --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db showreplicadb    --out /opt/backup/showreplicadb_27122022 
+mongodump --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db skylarkdev_db    --out /opt/backup/skylarkdev_db_27122022 
+mongodump --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db skylarkdev_nodejs    --out /opt/backup/skylarkdev_nodejs_27122022 
+mongodump --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db skylarkdevthree_db    --out /opt/backup/skylarkdevthree_db_27122022 
+mongodump --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db skylarkdevtwo_db    --out /opt/backup/skylarkdevtwo_db_27122022 
+mongodump --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db skylarkdevtwo_nodejsdb    --out /opt/backup/skylarkdevtwo_nodejsdb_27122022 
+mongodump --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db skylarkqa    --out /opt/backup/skylarkqa_27122022 
+mongodump --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db testdb    --out /opt/backup/testdb_27122022 
+
+
+mongorestore --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db digitalqa_skylark  destinamiondbname
+
+[10:34] Nishanth kumar
+aws s3 cp backup s3://devopsteams/NonProd-Databases/mongodb/
+
+mongodump --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db testdb    --out /opt/backup/testdb_27122022
+
+
+mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L  
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L digitalqa_skylark > digitalqa_skylark_28122022.sql
+5262
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L gradiant_skylark_db  > gradiant_skylark_db_28122022.sql
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L nightly_sdg  > nightly_sdg_28122022.sql
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L nightly_skylark > nightly_skylark_28122022.sql
+6874
+mysql -hsgrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -uadmin -pPa62Um2P6atc
+mysqldump -hsgrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -uadmin -pPa62Um2P6atc apjpreprod_qa > apjpreprod_qa_28122022.sql
+careerhub_mirror
+mysqldump -hsgrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -uadmin -pPa62Um2P6atc careerhub_mirror > careerhub_mirror_28122022.sql
+mysqldump -hsgrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -uadmin -pPa62Um2P6atc careerhub_test_22112021 > careerhub_test_22112021_28122022.sql
+
+scp -r kpisoft@ftp.kpisoft.com:/tmp/skylark-7.0-05012023124833-15517ed2c0d4fe9dadcd8dc72e0079fa977bc607-release_2022_s15_adhoc_apjlive-prod/* .
+
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjmirror_db > apjmirror_06012023.sql
+27547
+gunzip
+4748
+
+mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjmirror_db < smm_live_20230105.sql
+gzip
+24486
+
+
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L release_skylark_mirror > release_skylark_mirror_10012023.sql
+8000
+release_skylark
+
+
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L release_skylark > release_skylark_10012023.sql
+
+release_skylark_10012023.sql
+mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L release_skylark_mirror < release_skylark_10012023.sql
+
+
+
+mongo dump:
+mongodump --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db digitalqa_skylark  --out /opt/backup/digitalqa_skylark_27122022 
+mongorestore --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db digitalqa_skylark  destinamiondbname
+
+release_skylark
+release_skylark_mirror
+
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db release_skylark  --out /opt/backup/release_skylark_10012023_v1
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db release_skylark_mirror  --out /opt/backup/release_skylark_mirror_10012023
+_10012023
+release_skylark_mirror_10012023
+
+mongorestore --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db release_skylark_10012023  release_skylark_mirror
+
+mongorestore --host 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db release_skylark_mirror  release_skylark_10012023/ 
+
+mongorestore --host 172.31.23.229 --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db release_skylark_mirror 
+
+
+
+ mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L
+ 
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjmirror_db > apjmirror_db_18012023.sql
+17011
+mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjmirror_db < smm_live_20230117.sql
+31900
+
+ mysql -hjknonprod.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uadmin  -pzwjS0x0OpX5WURu23uyx
+  776  mysql -hjknonprod.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uadmin  -pzwjS0x0OpX5WURu23uyx jkmirror_db < jk_live_2022-11-24.sql
+  
+mysqldump -hjknonprod.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uadmin  -pzwjS0x0OpX5WURu23uyx  jkmirror_db  > jkmirror_db_2022-11-24.sql
+
+mysql -hjkprod-master.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uroot  -piep63L305U2ig3wAysuP jk_live < jk_live_COR_MET_NOTIFICATION_jkmirror_Backup19082022.sql
+
+
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjmirror_db > apjmirror_db_23012023.sql
+21861
+smm_live_20230122.sql
+mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjmirror_db < smm_live_20230122.sql
+3465
+
+mysql -hjkprod-master.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uroot  -piep63L305U2ig3wAysuP smmlive_new < smm_live_20230124.sql
+22264
+
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L drluat_test_db > drluat_test_db_27012023.sql
+4199smm_live_20230212.sql
+
+ mysqldump -uroot -pLtVhr8wJXHp2SvTC -h cthskylark.ctanibxecydf.ap-southeast-1.rds.amazonaws.com  smm_live  > 
+ mysqldump -uroot -pLtVhr8wJXHp2SvTC -h apjprod-readreplica.ctanibxecydf.ap-southeast-1.rds.amazonaws.com  smm_live  INVITATION_DET_BASE > smmlive_INVITATION_DET_BASE.sql
+ 
+mysqldump -hjkprod-master.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uroot  -piep63L305U2ig3wAysuP  jk_live CHAT >  jklive_CHAT.sql
+ mysqldump -hjkprod-master.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uroot  -piep63L305U2ig3wAysuP  jk_live CHAT_AUD >  jklive_CHAT_AUD.sql
+
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjmirror_db > apjmirror_db_09022023.sql
+15843
+
+gunzip smm_live_20230208.sql.gz
+22937
+
+mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjmirror_db <  smm_live_20230208.sql
+
+zip apjmirror_db_09022023.sql.zip apjmirror_db_09022023.sql
+
+gzip apjmirror_db_09022023.sql.gz apjmirror_db_09022023.sql
+
+
+Total Monthly cost: 37.26 USD
+
+
+4666
+
+gunzip filename.tx
+zip filename.txt.zip filename.txt
+
+zip smm_live_20230208.sql.zip smm_live_20230208.sql
+
+to dump data from mongodb to instance:
+
+mongodump -h 172.31.20.11 -u adminUser --authenticationDatabase "admin" -p Xps6U9QnMrUSFWkF --db TomorrowCareer --collection postedjobs --out tomorrorwcarrer_post_14022023  
+mongorestore -h 172.31.23.229 -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin --db skylarkdevone_nodejs --collection postedjobs  tomorrorwcarrer_post_14022023 skylarkdevone_nodejs 
+mongorestore -h 172.31.23.229 --username adminUser --password W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db skylarkdevone_nodejs releaseskylark_nodejs27012023/releaseskylark_nodejs --drop
+
+
+mongodump -h 172.31.20.11 -u username -p password --db dbname --collection collectionname --out 
+
+ctuat_careermodule
+
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db ctuat_careermodule --collection collaborators --out ctuat_careermodule_collaborators_14022023
+
+
+gunzip smm_live_20230213.sql.gz
+14704
+
+mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjmirror_db   <  smm_live_20230213.sql
+mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjmirror_db <  smm_live_20230208.sql
+
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L drluat_test_db > drluat_test_db_27012023.sql
+
+mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L drluat_test_db  <  drl_20230213.sql
+
+21182
+
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjmirror_db > apjmirror_db_20022023.sql
+mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjmirror_db < smm_live_20230219.sql
+zzip 3009 done
+13132
+
+mysqldump -hsgrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -uadmin -pPa62Um2P6atc apjpreprod_db > apjpreprod_db_20022023.sql
+gunzip  smm_live_20230219.sql.gz
+
+mysql -hsgrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -uadmin -pPa62Um2P6atc apjpreprod_db < smm_live_20230219.sql
+zip 4993 done
+13369
+
+smm_live_20230219.sql
+
+
+jkuat_db
+
+mysql -hjknonprod.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uadmin  -pzwjS0x0OpX5WURu23uyx  jkuat_db  < jk_live_2023-02-20.sql
+
+18959
+
+
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin"  --db releaseskylark_nodejs --collection tenantpreferences --out releaseskylark_nodejs_tenantpreferences_22022023
+
+db.tenantpreferences.update({tenantUniqueKey: "B68754980F040FE8"},{$set:{resumeParser:"DAXTRA"}},{upsert:true})
+
+
+TomorrowCareer_show
+
+tenantpreferences
+
+mongodump  -u adminUser --authenticationDatabase "admin" -p Xps6U9QnMrUSFWkF --db  TomorrowCareer_show --collection tenantpreferences --out TomorrowCarer_show_tenantpreferences_23022023
+mongodump  -u adminUser --authenticationDatabase "admin" -p Xps6U9QnMrUSFWkF --db TomorrowCareer_show --collection enterpriseassessments --out TomorrowCareer_show_enterpriseassessments_21032023
+
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db ctuat_careermodule --collection  enterpriselearnings --out ctuat_careermodule_enterpriselearnings_27022023
+
+
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db ctuat_careermodule --collection collaborators --out ctuat_careermodule_collaborators_02032023
+db.collaborators.updateOne({role:'Backend Lead'},{$set:{collaboratorsList:[]}});
+
+gunzip drl.gz
+29594
+
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L drluat_test_db > drluat_test_db_02032023.sql
+30344
+drl_20230301.sql
+
+mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L drluat_test_db < drl_20230301.sql
+29594
+
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db releaseskylark_nodejs --collection  schedulerjobs --out releaseskylark_nodejs_schedulerjobs_03032023
+
+11063
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L drluat_test_db > drluat_test_db_08032023.sql
+
+10848 
+zip drluat.zip drluat
+
+17639 gunzip
+drl_20230307.sql
+mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L drluat_test_db  <  drl_20230307.sql
+
+
+
+ip: 172.31.17.126
+niveditha.r
+463c&Ae
+TomorrowCareer_ct
+mongodump  -u adminUser --authenticationDatabase "admin" -p Xps6U9QnMrUSFWkF --db TomorrowCareer_ct --out /tmp/TomorrowCareer_ct_08032023
+
+mongodump  -u adminUser --authenticationDatabase "admin" -p Xps6U9QnMrUSFWkF --db careertomorrow --out /tmp/careertomorrow_08032023
+
+mysql -uroot -pLtVhr8wJXHp2SvTC -h cthskylark.ctanibxecydf.ap-southeast-1.rds.amazonaws.com
+careertomorrow
+mysqldump -uroot -pLtVhr8wJXHp2SvTC -h cthskylark.ctanibxecydf.ap-southeast-1.rds.amazonaws.com  careertomorrow > careertomorrow_08032023.sql
+
+
+tail -f /opt/nginx/logs/access.log | grep  drluattest.entomo.co
+
+Aws s3 cp   file.txt s3://bucketname/ 
+
+aws s3 cp   careertomorrow_08032023 s3://devopsteams/CT Environment/Mongo db
+aws s3 cp   TomorrowCareer_ct_08032023 s3://devopsteams/CT Environment/Mongo db
+aws s3 cp   careertomorrow_20230307.sql.gz s3://devopsteams/CT Environment/Maria db
+ 
+ 
+scp -r careertomorrow_08032023.sql.zip kpisoft@ftp.kpisoft.com:/tmp/
+TomorrowCareer_ct_08032023.zip
+scp -r TomorrowCareer_ct_08032023.zip kpisoft@ftp.kpisoft.com:/tmp/
+scp -r careertomorrow_08032023.zip kpisoft@ftp.kpisoft.com:/tmp/
+
+
+scp -r kpisoft@ftp.kpisoft.com:/tmp/ct/ 
+
+jk_live_2023-03-07.sql
+mysql -hjknonprod.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uadmin  -pzwjS0x0OpX5WURu23uyx  jkuat_db  < jk_live_2023-03-07.sql
+
+gunzip 19247
+
+jk_live_2023-03-12.sql
+mysql -hjknonprod.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uadmin  -pzwjS0x0OpX5WURu23uyx  jkuat_db  < jk_live_2023-03-12.sql
+
+
+apjuat2_db
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjuat2_db  >  apjuat2_db_16032023.sql
+8045
+
+19183
+smm_live_20230315.sql
+
+
+mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjuat2_db  <  smm_live_20230315.sql
+25664
+
+
+enterpriseassessments
+
+
+mongodump  -u adminUser --authenticationDatabase "admin" -p Xps6U9QnMrUSFWkF --db TomorrowCareer_show --collection tenantpreferences --out TomorrowCareer_show_tenantpreferences_24032023
+
+
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L drluat_test_db > drluat_test_db_27032023.sql
+22821
+gunzip drl_20230326.sql.gz
+26425
+mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L drluat_test_db < drl_20230326.sql
+22821
+zip drl.zip drl
+22821
+
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db ctuat_careermodule --collection collaborators --out ctuat_careermodule_collaborators_27032023
+
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db ctuat_mongo_db --out ctuat_mongo_db_03042023
+mongodump  -u adminUser --authenticationDatabase "admin" -p Xps6U9QnMrUSFWkF --db TomorrowCareer --collection resumes --out TomorrowCareer_resumes_27032023
+
+
+script in mongo:
+
+ssh -i carrerhub.pem centos@172.31.20.42 (cah tomrrowcareer)
+sudo su -
+scp -r kpisoft@ftp.kpisoft.com:/tmp/UploadCurrentRoleSkillsProductionMINDEF_new27032023.xlsx .
+scp -r kpisoft@ftp.kpisoft.com:/tmp/Update_current_role_skills_new_27032023.js .
+ls
+docker ps
+docker cp UploadCurrentRoleSkillsProductionMINDEF_new27032023.xlsx 4720c358d791:/usr/src/app
+docker cp Update_current_role_skills_new_27032023.js 4720c358d791:/usr/src/app
+docker exec -it 4720c358d791 /bin/sh
+ls
+vi Update_current_role_skills_new_27032023.js
+node Update_current_role_skills_new_27032023.js
+
+mongodb://careerhub:evBn12GBHkvuFAeD@ctmongo1.kpisoft.com:27017,ctmongo2.kpisoft.com:27017,ctmongo3.kpisoft.com:27017/?authSource=admin&w=1&replicaSet=kpict&readPreference=secondaryPreferred&retryWrites=true
+TomorrowCareer
+
+mongo  -u adminUser --authenticationDatabase "admin" -p wfKeN7FVh9QKPPkR
+
+mongodump  -u adminUser --authenticationDatabase "admin" -p wfKeN7FVh9QKPPkR --db legato_ct --collection skilltypes  --out  legato_ct-skilltypes-03042023
+
+
+add_uniqueCode_skillMangement
+
+mongodump  -u adminUser --authenticationDatabase "admin" -p Xps6U9QnMrUSFWkF --db TomorrowCareer_show --collection enterpriseassessments --out TomorrowCareer_show_enterpriseassessments_04042023
+enterpriseassessments
+
+skillmanagements
+
+mongodump  -u adminUser --authenticationDatabase "admin" -p wfKeN7FVh9QKPPkR --db legato_ct --collection skillmanagements  --out  legato_ct-skillmanagements-04042023
+
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db ctuat_careermodule --collection tenantpreferences --out ctuat_careermodule_tenantpreferences_05042023
+
+Database : TomorrowCareer
+Backup collection : resumes
+
+mongodump  -u adminUser --authenticationDatabase "admin" -p Xps6U9QnMrUSFWkF --db TomorrowCareer --collection resumes --out TomorrowCareer_resumes_05042023
+
+Database : ctuat_careermodule
+Backup collection : enterpriselearnings
+
+
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db ctuat_careermodule --collection enterpriselearnings --out ctuat_careermodule_enterpriselearnings_11042023
+
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db releaseskylark_nodejs --collection skillmanagements --out releaseskylark_nodejs_skillmanagements_06042023
+
+Passw0rd@123
+
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db releaseskylark_nodejs --collection enterpriselearnings --out releaseskylark_nodejs_enterpriselearnings_10042023
+
+
+mongodb://adminUser:W2eJqp7ae2kG5RgW@mongodbsgqa1.kpisoft.com:27017,mongodbsgqa2.kpisoft.com:27017,mongodbsgqa3.kpisoft.com:27017/?authSource=admin&w=1&replicaSet=kpict&readPreference=secondaryPreferred&retryWrites=true
+
+
+mongodb://adminUser:W2eJqp7ae2kG5RgW@mongodbsgqa1.kpisoft.com:27017,mongodbsgqa2.kpisoft.com:27017,mongodbsgqa3.kpisoft.com:27017/?authSource=admin&w=1&replicaSet=kpict&readPreference=secondaryPreferred&retryWrites=true
+ctuat_careermodule
+releaseskylark_nodejs
+
+22BA18336246D14D
+
+[18:05] Chethan B L.
+
+mongodump  -u adminUser --authenticationDatabase "admin" -p wfKeN7FVh9QKPPkR --db legato_ct --collection collaborators --out legato_ct_collaborators_12042023
+mongodb://legato_user:mfJJu123ZY4XjLtL@legato3.entomo.co:27017,legato2.entomo.co:27017,legato1.entomo.co:27017/?authSource=admin&w=1&replicaSet=legato&readPreference=secondaryPreferred&retryWrites=true
+legato_ct
+CT-Automation.B2B
+
+mysql -hjknonprod.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uadmin  -pzwjS0x0OpX5WURu23uyx
+mysqldump -hjknonprod.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uadmin  -pzwjS0x0OpX5WURu23uyx  smmuat_db  > smmuat_db_12042024.sql
+27267
+mysql -hjknonprod.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uadmin  -pzwjS0x0OpX5WURu23uyx smmuat_db < smmlive_2023-04-11.sql
+
+16411
+gunzip smmlive_2023-04-11.sql.gz
+11717
+
+
+3285 gunzip apjuat_14
+
+apjuat_db20230414.sql
+
+mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L sojitzuat  <  apjuat_db20230414.sql
+
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjuat_db  >  apjuat_db_16042023.sql
+18169
+
+apjuat_db_16042023.sql
+
+mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L sojitzuat  <  apjuat_db_16042023.sql
+
+5316
+
+apjvapt
+
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjvapt  > apjvapt_24042023.sql
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L cct_live  > cct_live_24042023.sql
+de_test_db
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L de_test_db  > de_test_db_24042023.sql
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L release_skylark  > release_skylark_24042023.sql
+
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L release_skylark_mirror  > release_skylark_mirror_24042023.sql
+
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L skylarkdevact  > skylarkdevact_24042023.sql
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L skylarkdevone_db  > skylarkdevone_db_24042023.sql
+22960
+
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L skylarkdevproduct  > skylarkdevproduct_24042023.sql
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L skylarkdevthree_db  > skylarkdevthree_db_24042023.sql
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L skylarkdevtwo_db  > skylarkdevtwo_db_24042023.sql
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L skylarkprestodb  > skylarkprestodb_24042023.sql
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L skylarkqa  > skylarkqa_24042023.sql
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L test_src  > test_src_24042023.sql
+mysqldump -hsgrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -uadmin -pPa62Um2P6atc apjpreprod_db > apjpreprod_db_24042023.sql
+
+8919
+
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L skylarkdevmirror_db  > skylarkdevmirror_db_24042023.sql
+7326
+
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db TomorrowCareer  --out TomorrowCareer_25042023
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db skylarkdevtwo_nodejsdb  --out skylarkdevtwo_nodejsdb_25042023
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db skylarkdevtwo_db  --out skylarkdevtwo_db_25042023
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db skylarkdevproduct_mongo  --out skylarkdevproduct_mongo_25042023
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db skylarkdevone_nodejs  --out skylarkdevone_nodejs_25042023
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db skylarkdevmirror  --out skylarkdevmirror_25042023
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db skylarkdevact_mongo  --out skylarkdevact_mongo_25042023
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db skylarkdev_nodejs  --out skylarkdev_nodejs_25042023
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db releaseskylark_nodejs  --out releaseskylark_nodejs_25042023
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db release_skylark_mirror  --out release_skylark_mirror_25042023
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db release_skylark  --out release_skylark_25042023
+
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db apjpreprod_mongo --out apjpreprod_mongo_25042023
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db apjpreprod_career --out apjpreprod_career_25042023
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db releaseskylark_mirror_nodejs --out releaseskylark_mirror_nodejs_25042023
+
+
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" 
+unzip awscliv2.zip 
+sudo ./aws/install
+
+mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L drluat_test_db  <  drl_20230425.sql
+
+mysql -hjknonprod.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uadmin  -pzwjS0x0OpX5WURu23uyx
+mysqldump -hjknonprod.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uadmin  -pzwjS0x0OpX5WURu23uyx  smmuat_db  > smmuat_db_03052023.sql
+27267
+mysql -hjknonprod.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uadmin  -pzwjS0x0OpX5WURu23uyx smmuat_db < smmlive_2023-05-02.sql
+
+20713
+smmlive_new
+22597
+
+
+mysqldump -C --max_allowed_packet=1024M -hsmmlive.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uadmin  -pIw0xz1pnV9kVMmfrDldl  --routines  --triggers smmlive >
+
+mysql -hsmmlive.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uadmin  -pIw0xz1pnV9kVMmfrDldl
+mysql -hsmmlive.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uadmin  -pIw0xz1pnV9kVMmfrDldl
+mysqldump -hsmmlive.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uadmin  -pIw0xz1pnV9kVMmfrDldl smmlive > smmlive_04052023.sql
+
+
+16693
+smmlive_04052023.sql
+mysql -hjknonprod.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uadmin  -pzwjS0x0OpX5WURu23uyx smmuat_db < smmlive_04052023.sql
+18486.pts-28.ip-172-27-27-193
+mysql -h172.27.39.252  -uadmin  -pIw0xz1pnV9kVMmfrDldl
+
+smmlive-apj:mongo  -u adminUser --authenticationDatabase "admin" -p Xps6U9QnMrUSFWkF
+jklive: mongo  -u adminUser --authenticationDatabase "admin" -p V6Fvhc2LnJ5CpgMN
+smmliv-jk:
+mea-live:
+legato:mongo  -u adminUser --authenticationDatabase "admin" -p wfKeN7FVh9QKPPkR
+drllive:
+
+apjnonprod: mongo --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin"
+
+
+
+db.createUser({​user: "sabiha",pwd: "sabiha",roles:[{​ role: "readWrite", db: "apjuat_nodejs" }​]}​)
+db.createUser({​user: "sabiha",pwd: "sabiha.ks",roles:[{​ role: "readWrite", db: "apjuat_nodejs" }​]}​)
+
+
+enterpriselearnings
+
+
+mongodump  -u adminUser --authenticationDatabase "admin" -p wfKeN7FVh9QKPPkR --db legato_ct --collection enterpriselearnings --out legato_ct_enterpriselearnings_10052023
+
+mongodb://legato_user:mfJJu123ZY4XjLtL@legato3.entomo.co:27017,legato2.entomo.co:27017,legato1.entomo.co:27017/legato_ct?authSource=admin&w=1&replicaSet=legato&readPreference=secondaryPreferred&retryWrites=true
+
+sgrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com
+
+mysqldump -hmum-nonproddev.cg0jth8keqgc.ap-south-1.rds.amazonaws.com -uadmin -pmi3g5k57QDsc2crsH6qe  
+
+
+[15:49] Nishanth kumar
+
+
+
+mysql -h mum-nonprod.cg0jth8keqgc.ap-south-1.rds.amazonaws.com -uadmin -p5xPxpEOSBTXbrfQzNU8N
+mysqldump -h mum-nonprod.cg0jth8keqgc.ap-south-1.rds.amazonaws.com -uadmin -p5xPxpEOSBTXbrfQzNU8N  releaseskylark > releaseskylark_11052023.sql
+24427
+mysqldump -h mum-nonprod.cg0jth8keqgc.ap-south-1.rds.amazonaws.com -uadmin -p5xPxpEOSBTXbrfQzNU8N  releaseskylarkmirror > releaseskylarkmirror_11052023.sql
+25097
+mysql -h mum-nonprod.cg0jth8keqgc.ap-south-1.rds.amazonaws.com -uadmin -p5xPxpEOSBTXbrfQzNU8N  releaseskylark < releaseskylarkmirror_11052023.sql
+
+
+
+mongodump -u adminUser --authenticationDatabase "admin" -p Xps6U9QnMrUSFWkF  --db TomorrowCareer_apj --collection resumes --out TomorrowCareer_apj_resumes_11052023
+
+mongodb://TomorrowCareer_apj_user:aWcaqwtYHbjsh4XzAer@ctmongo1.kpisoft.com:27017,ctmongo2.kpisoft.com:27017,ctmongo3.kpisoft.com:27017/?authSource=admin&w=1&replicaSet=kpict&readPreference=secondaryPreferred&retryWrites=true
+
+
+releaseskylark_11052023.sql
+
+mysql -h mum-nonprod.cg0jth8keqgc.ap-south-1.rds.amazonaws.com -uadmin -p5xPxpEOSBTXbrfQzNU8N  releaseskylark < releaseskylark_11052023.sql
+
+26603
+mysql -h mum-nonprod.cg0jth8keqgc.ap-south-1.rds.amazonaws.com -uadmin -p5xPxpEOSBTXbrfQzNU8N  releaseskylarkmirror < releaseskylark_11052023.sql
+
+10116
+zip releaseskylrkmirror
+10357
+
+
+mysql -h mum-nonprod.cg0jth8keqgc.ap-south-1.rds.amazonaws.com -uadmin -p5xPxpEOSBTXbrfQzNU8N  releaseskylarkmirror USR_DET_USER < releaseskylark_11052023.sql
+
+USR_DET_USER  EMP_DET_EMPLOYEE
+
+
+mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L test <  releaseskylarkmirror_11052023.sql 
+10740
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L test USR_DET_USER > test_USR_DET_USER_160523.sql
+
+mysqldump -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L test EMP_DET_EMPLOYEE > test_EMP_DET_EMPLOYEE_160523.sql
+
+mysql -h mum-nonprod.cg0jth8keqgc.ap-south-1.rds.amazonaws.com -uadmin -p5xPxpEOSBTXbrfQzNU8N  releaseskylarkmirror  <  test_USR_DET_USER_160523.sql
+
+mysql -h mum-nonprod.cg0jth8keqgc.ap-south-1.rds.amazonaws.com -uadmin -p5xPxpEOSBTXbrfQzNU8N  releaseskylarkmirror  <  test_EMP_DET_EMPLOYEE_160523.sql
+
+ aws s3 cp releaseskylark_11052023.sql s3://apjbackup/UnusedProdSchemasAPJLive/
+ aws s3 cp releaseskylark_11052023.sql.zip s3://devopsteams/NonProd-Databases/maraidb/
+ 
+mongodump  -u adminUser --authenticationDatabase "admin" -p Xps6U9QnMrUSFWkF --db TomorrowCareer --collection resumes --out TomorrowCareer_resumes_22052023
+ mongodb://careerhub:evBn12GBHkvuFAeD@ctmongo1.kpisoft.com:27017,ctmongo2.kpisoft.com:27017,ctmongo3.kpisoft.com:27017/TomorrowCareer?authSource=admin&w=1&replicaSet=kpict&readPreference=secondaryPreferred&retryWrites=true
+ 
+ 
+ UploadCurrentRoleSkillsProductionMINDEF_new09052023.xlsx
+ 
+avinash.s
+eK$#609
+ host
+ skylark_demo: 172.31.17.126
+ apjuat2: 172.31.16.140
+ 
+ 223.196.192.29/32
+mongo  -u adminUser --authenticationDatabase "admin" -p V6Fvhc2LnJ5CpgMN
+mongodump  -u adminUser --authenticationDatabase "admin" -p V6Fvhc2LnJ5CpgMN --db  geodips_nodejs --collection resumes --out geodips_nodejs_resumes_24052023
+
+mongodump -u adminUser --authenticationDatabase "admin" -p Xps6U9QnMrUSFWkF  --db TomorrowCareer_apj --collection tenantpreferences --out TomorrowCareer_apj_tenantpreferences_26052023
+
+mongodump -u adminUser --authenticationDatabase "admin" -p Xps6U9QnMrUSFWkF  --db TomorrowCareer_apj --collection tenantpreferences --out TomorrowCareer_apj_tenantpreferences_29052023
+
+mongodump  -u adminUser --authenticationDatabase "admin" -p Xps6U9QnMrUSFWkF --db TomorrowCareer --collection resumes --out TomorrowCareer_resumes_30052023
+
+KPI_DET_LIB
+
+
+mysql -C --max_allowed_packet=512M  -uroot -phChnDUPAaLsEYkBW -h apjprod-2.ctanibxecydf.ap-southeast-1.rds.amazonaws.com
+mysqldump -C --max_allowed_packet=512M  -uroot -phChnDUPAaLsEYkBW -h apjprod-2.ctanibxecydf.ap-southeast-1.rds.amazonaws.com drl KPI_DET_LIB >  drl_KPI_DET_LIB_30052023.sql
+
+mysqldump -C --max_allowed_packet=512M  -uroot -phChnDUPAaLsEYkBW -h apjprod-2.ctanibxecydf.ap-southeast-1.rds.amazonaws.com drl KPI_DET_LIB_AUD >  drl_KPI_DET_LIB_AUD_30052023.sql
+
+KPI_DET_LIB
+KPI_DET_LIB_AUD
+
+aws s3 cp releaseskylark_11052023.sql.zip s3://devopsteams/NonProd-Databases/maraidb/
+aws s3 cp drl_KPI_DET_LIB_30052023.sql.zip s3://devopsteams/NonProd-Databases/maraidb/
+
+mongodump  -u adminUser --authenticationDatabase "admin" -p Xps6U9QnMrUSFWkF --db TomorrowCareer --collection enterpriselearnings --out TomorrowCareer_enterpriselearnings_01062023
+
+"mongodb://careerhub:evBn12GBHkvuFAeD@ctmongo1.kpisoft.com:27017,ctmongo2.kpisoft.com:27017,ctmongo3.kpisoft.com:27017/TomorrowCareer?authSource=admin&w=1&replicaSet=kpict&readPreference=secondaryPreferred&retryWrites=true
+"mongodb://rakshith:qNhOTYd@172.31.29.155:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false"^
+
+mtn
+
+
+migrating  mtn
+provdide dedicated enivironment to  the mtn client 
+updating maintance page
+
+mongodump  -u adminUser --authenticationDatabase "admin" -p Xps6U9QnMrUSFWkF --db TomorrowCareer --collection resumes --out TomorrowCareer_resumes_07062023
+
+
+rangaswamy.h
+ctanibxecydf
+172.27.39.252
+
+
+mongodump  -u adminUser --authenticationDatabase "admin" -p Xps6U9QnMrUSFWkF --db TomorrowCareer --collection resumes --out TomorrowCareer_resumes_09062023
+
+mongodump  -u adminUser --authenticationDatabase "admin" -p Xps6U9QnMrUSFWkF --db TomorrowCareer --collection resumes --out TomorrowCareer_resumes_13062023
+mongodb://careerhub:evBn12GBHkvuFAeD@ctmongo1.kpisoft.com:27017,ctmongo2.kpisoft.com:27017,ctmongo3.kpisoft.com:27017/?authSource=admin&w=1&replicaSet=kpict&readPreference=secondaryPreferred&retryWrites=true
+
+TomorrowCareer
+
+mongodump --port 27017  -u "adminUser" -p W2eJqp7ae2kG5RgW --authenticationDatabase "admin" --db ctuat_careermodule --collection skilltypes --out ctuat_careermodule_skilltypes_14062023
+
+
+gunzip smmlive_2023-06-13.sql.gz
+2076
+mysql -hjknonprod.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uadmin  -pzwjS0x0OpX5WURu23uyx
+mysqldump -hjknonprod.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uadmin  -pzwjS0x0OpX5WURu23uyx  smmuat_db  > smmuat_db_14062023.sql
+3773
+mysql -hjknonprod.cf3sl5r2jgkn.ap-southeast-3.rds.amazonaws.com  -uadmin  -pzwjS0x0OpX5WURu23uyx smmuat_db < smmlive_2023-06-13.sql
+5656
+zip smmuat_db_14062023.sql.zip smmuat_db_14062023.sql
+
+
+

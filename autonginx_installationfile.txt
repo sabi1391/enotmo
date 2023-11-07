@@ -1,0 +1,64 @@
+#!/bin/bash
+
+# Update the system
+yum update -y
+
+# Install the nginx repository
+yum install -y nginx-release
+
+# Make a new directory
+cd /opt
+mkdir nginx-compile
+
+# Change the diretory
+cd /opt/nginx-compile/
+
+# Download the pcre source code
+wget https://ftp.exim.org/pub/pcre/pcre-8.42.tar.gz
+
+# Download the openssl source code
+wget https://www.openssl.org/source/openssl-1.1.1d.tar.gz
+
+# Download the zlib source code
+wget http://zlib.net/fossils/zlib-1.2.11.tar.gz
+
+
+# Untar the pcre,zlib,openssl source code
+tar -xf pcre-8.42.tar.gz
+tar -xf openssl-1.1.1d.tar.gz
+tar -xf zlib-1.2.11.tar.gz
+
+
+# Make a new directory
+cd /opt
+mkdir nginx2
+
+# Change the diretory
+cd /opt/nginx2
+
+# Download the nginx source code
+wget https://nginx.org/download/nginx-1.17.0.tar.gz
+
+# Untar the nginx
+tar -xf nginx-1.17.0.tar.gz
+
+# Change directory to the nginx source code
+cd nginx-1.17.0
+
+# Configure nginx
+./configure --prefix=/opt/nginx --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_geoip_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_slice_module --with-openssl=/opt/nginx-compile/openssl-1.1.1d --with-pcre=/opt/nginx-compile/pcre-8.42 --with-http_stub_status_module --with-threads --with-stream --with-stream_ssl_module --with-file-aio --with-zlib=/opt/nginx-compile/zlib-1.2.11 --user=nginx --group=nginx  --with-http_ssl_module --without-http_uwsgi_module --conf-path=/opt/nginx/conf/nginx.conf
+
+# Make nginx
+make
+
+# Install nginx
+make install
+
+# Start nginx
+systemctl start nginx
+
+# Enable nginx to start at boot
+#systemctl enable nginx
+
+
+

@@ -1,0 +1,65 @@
+#set -e
+nowdate=$(date +"%Y%m%d")
+dayago=`(date --date='2 days ago' '+%Y%m%d')`
+todate=$(date +"%d")
+mondate=$(date +"%m")
+year=$(date +"%Y")
+
+cd /opt/mariadbbackup/smmlive
+rm -rf smm_live_$dayago.sql.gz
+#rm -rf apjuat_db$dayago.sql.gz
+#rm -rf drluat_test_db$dayago.sql.gz
+#rm -rf apjuat2_db$dayago.sql.gz
+#rm -rf ctuat_db$dayago.sql.gz
+#rm -rf achieveruat$dayago.sql.gz
+
+#mysqldump -C --max_allowed_packet=512M -uroot -pLtVhr8wJXHp2SvTC -h apjprodreadreplica.ctanibxecydf.ap-southeast-1.rds.amazonaws.com  smm_live > smm_live_$nowdate.sql
+mysqldump -C --max_allowed_packet=512M --single-transaction=TRUE -uroot -pLtVhr8wJXHp2SvTC -h apjprod-readreplica.ctanibxecydf.ap-southeast-1.rds.amazonaws.com  smm_live > smm_live_$nowdate.sql
+#mysqldump -C --max_allowed_packet=512M -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -uroot -p9UzdCpC9HPwmVM9L apjuat_db > apjuat_db$nowdate.sql
+#mysqldump -C --max_allowed_packet=512M -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -uroot -p9UzdCpC9HPwmVM9L drluat_test_db > drluat_test_db$nowdate.sql
+#mysqldump -C --max_allowed_packet=512M -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -uroot -p9UzdCpC9HPwmVM9L ctuat_db > ctuat_db$nowdate.sql
+#mysqldump -C --max_allowed_packet=512M -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -uroot -p9UzdCpC9HPwmVM9L apjuat2_db > apjuat2_db$nowdate.sql
+#mysqldump -C --max_allowed_packet=512M -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -uroot -p9UzdCpC9HPwmVM9L achieveruat > achiever_uat_db$nowdate.sql
+
+#OUT=$?
+#if [ "$OUT" = "0" ] ; then
+# bash /opt/scripts/teams-chat-post.sh https://outlook.office.com/webhook/659990b9-b909-4c5b-ac06-dd168977b423@4e7fc100-a3ca-4172-9394-29dbfec53920/IncomingWebhook/0c5c27b7c3514620bff6b9fab360c8bc/39c12b9f-469b-44b5-9484-16bdc90df3a8 "SMM Live Database Backup" "#000000" "Status: SUCCESS"
+#else
+# bash /opt/scripts/teams-chat-post.sh https://outlook.office.com/webhook/659990b9-b909-4c5b-ac06-dd168977b423@4e7fc100-a3ca-4172-9394-29dbfec53920/IncomingWebhook/0c5c27b7c3514620bff6b9fab360c8bc/39c12b9f-469b-44b5-9484-16bdc90df3a8 "SMM Live Database Backup" "#000000" "Status: FAILED"
+
+#fi
+
+
+#mysql -u root -pZms4QFhAq8Q9 -h 54.179.31.177 apjmirror_db < smm_live_$nowdate.sql
+#mysql -hapjnonprodrds.ctanibxecydf.ap-southeast-1.rds.amazonaws.com -u root -p9UzdCpC9HPwmVM9L apjmirror_db < smm_live_$nowdate.sql
+#OUT=$?
+#if [ "$OUT" = "0" ] ; then
+#bash /opt/scripts/teams-chat-post.sh https://outlook.office.com/webhook/659990b9-b909-4c5b-ac06-dd168977b423@4e7fc100-a3ca-4172-9394-29dbfec53920/IncomingWebhook/0c5c27b7c3514620bff6b9fab360c8bc/39c12b9f-469b-44b5-9484-16bdc90df3a8 "DB-Refresh status of APJMirror" "#000000" "Status: SUCCESS"
+#else
+#bash /opt/scripts/teams-chat-post.sh https://outlook.office.com/webhook/659990b9-b909-4c5b-ac06-dd168977b423@4e7fc100-a3ca-4172-9394-29dbfec53920/IncomingWebhook/0c5c27b7c3514620bff6b9fab360c8bc/39c12b9f-469b-44b5-9484-16bdc90df3a8 "DB-Refresh status of APJ-Mirror" "#000000" "Status: FAILED"
+
+#fi
+
+
+gzip smm_live_$nowdate.sql
+#gzip apjuat_db$nowdate.sql
+#gzip drluat_test_db$nowdate.sql
+#gzip ctuat_db$nowdate.sql
+#gzip apjuat2_db$nowdate.sql
+#gzip achiever_uat_db$nowdate.sql
+
+/usr/local/sbin/aws  s3 cp smm_live_$nowdate.sql.gz s3://apjbackup/Prodmariadb/$year/$mondate/$todate/
+#/usr/local/sbin/aws  s3 cp apjuat_db$nowdate.sql.gz s3://apjbackup/uatmariadb/$year/$mondate/$todate/
+#/usr/local/sbin/aws  s3 cp drluat_test_db$nowdate.sql.gz s3://apjbackup/uatmariadb/drluat/$year/$mondate/$todate/
+#/usr/local/sbin/aws  s3 cp ctuat_db$nowdate.sql.gz s3://apjbackup/uatmariadb/ctuat/$year/$mondate/$todate/
+#/usr/local/sbin/aws  s3 cp apjuat2_db$nowdate.sql.gz s3://apjbackup/uatmariadb/apjuatmirror/$year/$mondate/$todate/
+#/usr/local/sbin/aws  s3 cp achiever_uat$nowdate.sql.gz s3://apjbackup/uatmariadb/achiever_uat/$year/$mondate/$todate/
+
+OUT=$?
+if [ "$OUT" = "0" ] ; then
+ bash /opt/scripts/teams-chat-post.sh https://outlook.office.com/webhook/659990b9-b909-4c5b-ac06-dd168977b423@4e7fc100-a3ca-4172-9394-29dbfec53920/IncomingWebhook/0c5c27b7c3514620bff6b9fab360c8bc/39c12b9f-469b-44b5-9484-16bdc90df3a8 "SMM Live Database Backup Pushed to S3" "#000000" "Status: SUCCESS"
+else
+bash /opt/scripts/teams-chat-post.sh https://outlook.office.com/webhook/659990b9-b909-4c5b-ac06-dd168977b423@4e7fc100-a3ca-4172-9394-29dbfec53920/IncomingWebhook/0c5c27b7c3514620bff6b9fab360c8bc/39c12b9f-469b-44b5-9484-16bdc90df3a8 "SMM Live Database Backup Pushed to S3" "#000000" "Status: FAILED"
+
+fi
+

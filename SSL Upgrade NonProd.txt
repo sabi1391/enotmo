@@ -1,0 +1,246 @@
+
+              
+              
+                  ********** Upgradation of SSL Certificates in Nonprod Environment *********
+
+
+    1)Take the backup of nginx.conf file from /opt/nginx/conf or etc/nginx/conf folder.
+	2)check the back is taken or not.
+    2)Check the stored path of Old SSL certificates (entomo_ssl file) in nginx.conf and take their back up.
+	3)change directory to tmp and Download the new SSL certificates from FTP server by using scp command.
+	4)Replace the new SSL certificates in the place of old SSL certificates in  /opt/nginx/conf/entomo_ssl.
+	5)chnge directory to /sbin and Test and reload the Nginx server to save the changes.
+
+ 
+ 
+ 
+ Commands:
+ 
+ cd /opt/nginx/conf
+ ls
+ cp nginx.conf /opt/backup/nginx_02022022.conf
+ cat nginx.conf
+ cd /opt/nginx/conf/entomo_ssl
+ ls
+ mkdir /opt/backup/entomo_ssl
+ cp /opt/nginx/conf/entomo_ssl/* /opt/backup/entomo_ssl/.
+ cp * /opt/backup/entomo_ssl/
+ cd /opt/backup/entomo_ssl
+ ls
+ cd /tmp
+ scp -r kpisoft@ftp.kpisoft.com:/tmp/entomo/* .
+ cp entomo_bundle.crt /opt/nginx/conf/entomo_ssl/entomo_bundle.crt 
+ cp entomo_private.key /opt/nginx/conf/entomo_ssl/entomo_private.key
+ cd /opt/nginx
+ cd /sbin
+ ls
+ cd /opt/nginx/sbin
+ ls
+ ./nginx -t
+ ./nginx -s reload
+
+
+ echo | openssl s_client -servername <domain name> -connect <domain name>:443 2>/dev/null | openssl x509 -noout -issuer -subject -dates
+ 
+ 
+ 
+ 
+       cd /opt
+  999  ls
+ 1000  cd nginx
+ 1001  ls
+ 1002  cd conf
+ 1003  ls
+ 1004  cd /etc
+ 1005  ls
+ 1006  cd nginx
+ 1007  ls
+ 1008  cat nginx.conf
+ 1009  clear
+ 1010  cd /opt/nginx/conf/entomo_ssl
+ 1011  ls
+ 1012  cd /opt
+ 1013  ls
+ 1014  cd backup
+ 1015  mkdir entomo_ssl
+ 1016  ls
+ 1017  cp /opt
+ 1018  cp /opt/nginx/conf/entomo_ssl/* /opt/backup/entomo_ssl/.
+ 1019  cd entomo_ssl/
+ 1020  ls
+ 1021  cd /tmp
+ 1022  ls
+ 1023  scp -r kpisoft@ftp.kpisoft.com:/tmp/entomo/* .
+ 1024  ls
+ 1025  clear
+ 1026  cp entomo_bundle.crt /opt/nginx/conf/entomo_ssl/entomo_bundle.crt 
+ 1027  cp entomo_private.key /opt/nginx/conf/entomo_ssl/entomo_private.key 
+ 1028  cd /etc
+ 1029  cd nginx
+ 1030  ls
+ 1031  cd /sbin
+ 1032  ls
+ 1033  ./nginx -t
+ 1034  ./nginx -s reload
+
+
+
+ssl_certificate /opt/nginx/conf/ssl/entomossl/entomo_bundle.crt;
+ssl_certificate_key /opt/nginx/conf/ssl/entomossl/entomo_private.key;
+
+sg---
+achiveruat: kpisoft
+ctuat : kpisoft
+
+apjpreprod:done
+cahuat:done
+releaseskylarkDRL:done
+releaseskylarkmirror: done
+skylarkqa.entomo.co: done
+drluattest.entomo.co: done
+releaseskylark.entomo.co: done
+nightlysdg.entomo.co: done
+sgp_nonprod_swarm_master_qa_01
+jk--
+/opt/nginx/conf/entomo_ssl/entomo_bundle.crt;
+/opt/nginx/conf/entomo_ssl/entomo_private.key;
+
+jkpreprod: done
+jkuat.entomo.co: done
+
+mea--
+meauat: done
+meamirror:
+aldar: done
+
+/opt/nginx/conf/ssl/entomo/entomo_bundle.crt;
+/opt/nginx/conf/ssl/entomo/entomo_private.key;
+  ssl_certificate /opt/nginx/conf/ssl/entomo/entomo_bundle.crt;
+  ssl_certificate_key /opt/nginx/conf/ssl/entomo/entomo_private.key;
+ssl_certificate /opt/nginx/conf/ssl/entomo/entomo_bundle.crt;
+ssl_certificate_key /opt/nginx/conf/ssl/entomo/entomo_private.key;
+sg: apjpreprod, cahuat, releaseskylarkDRL,  releaseskylarkmirror, skylarkqa, apjmirror, nightlysdg, drluattest and releaseskylark.
+
+jk: jkpreprod and jkuat.
+
+mea: meamirror, meauat and aldarqa.
+
+  ssl_certificate /opt/nginx/conf/ssl/entomossl/entomo_bundle.crt;
+                ssl_certificate_key /opt/nginx/conf/ssl/entomossl/entomo_private.key;
+
+
+
+scp -r entomossl kpisoft@ftp.kpisoft.com:/tmp/
+[20:30] Nishanth kumar
+scp -r kpisoft@ftp.kpisoft.com:/tmp/entomossl/entomo_bundle.crt .
+
+entomo_bundle.crt
+
+apjnonprodkibana:
+/opt/nginx/conf/ssl/entomossl/entomo_bundle.crt
+/opt/nginx/conf/ssl/entomossl/entomo_private.key
+
+fractal:
+/opt/nginx/conf/ssl/entomossl/entomo_bundle.crt
+/opt/nginx/conf/ssl/entomossl/entomo_private.key
+
+cr:
+/opt/nginx/conf/ssl/entomossl/entomo_bundle.crt;
+/opt/nginx/conf/ssl/entomossl/entomo_private.key;
+
+
+
+
+
+
+
+
+done:
+devskylark.entomo.co	
+digitalmirror.entomo.co	
+digitalqa.entomo.co	
+digitalqa2.entomo.co	
+drluattest.entomo.co	
+geodipauat.entomo.co	
+gradientqa.entomo.co	
+ihrp-uat.entomo.co	
+insanqa.entomo.co	
+jkmirror.entomo.co	
+jkpreprod.entomo.co	
+jkuat.entomo.co	
+kpcpms.entomo.co	
+kpcpmsuat.entomo.co	
+legato.entomo.co	
+legatointernal.entomo.co	
+meamirror.entomo.co	
+meanonprodswarmpit.entomo.co	
+fractalperformanceuat.entomo.co	
+cubeuat.entomo.co	
+apjuatmirror.entomo.co
+cr.entomo.co
+kb.entomo.co
+releasechecklist.entomo.co
+https://cmdb.entomo.co/
+legatocareersuat.entomo.co
+jkkibanaqa.entomo.co
+jkswarmpitqa.entomo.co
+meanonprodkibana.entomo.co	
+
+not working:
+drillqa.entomo.co	
+dppolice.entomo.co	
+apjuatswarmpit.entomo.co	
+em3616.entomo.co
+jkproddrill.entomo.co	
+jkprodmongodb1.entomo.co	
+jkprodmongodb2.entomo.co	
+jkprodmongodb3.entomo.co
+digitalqa_skylark
+legato1.entomo.co	
+legato3.entomo.co		
+	
+not required:
+docs.entomo.co --notrequired
+fingerprint.entomo.co	--notrequired
+geodipalt.entomo.co	--notrequired
+geodipauatlt.entomo.co	--notrequired
+go.entomo.co	--notrequired
+help.entomo.co	--notrequired
+	
+	
+
+ --
+
+/opt/nginx/conf/ssl/entomossl/entomo_bundle.crt;
+/opt/nginx/conf/ssl/entomossl/entomo_private.key;
+
+
+/opt/nginx/ssl/entomo_bundle.crt;
+/opt/nginx/ssl/entomo_private.key;
+
+
+
+
+
+ mv bundle.crt /opt/backup/bundle.crt_21122022
+scp -r kpisoft@ftp.kpisoft.com:/tmp/entomossl/entomo_bundle.crt .
+
+ cp ../ssl/entomo_bundle.crt .
+ 
+ 
+ scp -r backup.zip kpisoft@ftp.kpisoft.com:/tmp/
+
+
+alfaaz
+alfas
+alfas sahil
+asfan
+anas asfan
+
+
+
+ssl_certificate /opt/nginx/conf/tatanewssl/tata/certt.crt;
+ssl_certificate_key /opt/nginx/conf/tatanewssl/tata/mygps.tataelxsi.co.in.key;
+
+
+scp -r kpisoft@ftp.kpisoft.com:/tmp/entomossl/entomo_bundle.crt .

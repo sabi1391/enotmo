@@ -1,0 +1,33 @@
+---
+ - hosts: localhost
+   gather_facts: true
+   become: true
+   become_user: root
+   become_method: sudo
+   vars:
+    backup_folder: /opt/backup
+    bucket_name: samplebackuptest
+    nginx_path: /opt/nginx/conf/
+    cur_year: "{{ansible_date_time.year}}"
+    cur_month: "{{ansible_date_time.month}}"
+    cur_day: "{{ansible_date_time.day}}"
+   tasks:
+    - name: backup nginx conf files
+      copy:
+        src: "{{nginx_path}}/nginx.conf"
+        dest: "{{backup_folder}}/nginx.conf_{{cur_year}}-{{cur_month}}-{{cur_day}}"
+        mode: "0644"
+    - name: zip the file
+      archive:
+        path: "{{backup_folder}}/nginx.conf_{{cur_year}}-{{cur_month}}-{{cur_day}}"
+        dest: "/tmp/nginx.conf_{{cur_year}}-{{cur_month}}-{{cur_day}}.zip"
+        format: zip
+    - name: copy file local to s3 bucket
+      aws_s3:
+       aws_access_key: AKIAYKVMXRKT2ELRPC7I
+       aws_secret_key: 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
+       region: ap-southeast-1
+       bucket: "{{bucket_name}}"
+       object: "mariadb/{{ cur_year }}/{{ cur_month }}/{{ cur_day }}"
+       src:  "/tmp/nginx.conff_{{cur_year}}-{{cur_month}}-{{cur_day}}.zip"
+       mode: put
