@@ -1,0 +1,35 @@
+steps used while build
+1.Take backup of nginx configuration file.
+2.Copy maintances to the nginx configuration file.
+3.Take backup of UI static files.
+4.Copy static files from ftp server to the UI path.
+5.Create a new virtual nginx configuration for show.entomo.co
+6.Create the show.entomo.co URL in route53
+7.Take backup of backend build.
+8.adding the properties is config file 
+9.Deploy backend build with new build along with new property files
+10.Clear the cache.
+11.Remove the maintance and replace with the nginx configuration file
+12.Test and Reload the nginx
+==========================================================================================
+Build number UI:
+skylark-7.0-13032023133012-52f83fb96acaedbb097a7e2b5c02caf6bf127493-release
+Build number Backend:
+skylark-7.0-13032023133051-52f83fb96acaedbb097a7e2b5c02caf6bf127493-release
+Build number CT:
+52f83fb96acaedbb097a7e2b5c02caf6bf127493
+
+Releaseskylarkskylark-7.0-13032023133051-52f83fb96acaedbb097a7e2b5c02caf6bf127493-release
+scp -r kpisoft@ftp.kpisoft.com:/tmp/skylark-7.0-13032023133012-52f83fb96acaedbb097a7e2b5c02caf6bf127493-release-prod/* .
+
+location /admin {
+alias /opt/nginx/html;
+index maintenance.html;
+        }
+        location /home {
+alias /opt/nginx/html;
+index maintenance.html;
+        }
+
+=========================================================================================================================================
+
